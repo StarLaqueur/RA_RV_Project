@@ -2151,7 +2151,7 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 531fe660d06ad8160b977d1f42c57b8a
+      Hash: 18e2fa8a7c23553ec4979877a164b90c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PinManager
@@ -2188,4 +2188,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/VR-Vs-KMS/Scenes/GameScene.unity
-  playerPath: C:/Users/Antoine/Downloads/ARapp.apk
+  playerPath: C:/Users/Antoine/Downloads/AR app.apk

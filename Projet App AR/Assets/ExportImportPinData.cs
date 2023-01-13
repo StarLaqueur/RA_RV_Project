@@ -181,40 +181,46 @@ public class ExportImportPinData : MonoBehaviour
         PinThrowableList = GameObject.FindGameObjectsWithTag("PinThrowable");
         PinSpawnList = GameObject.FindGameObjectsWithTag("PinSpawn");
 
-        //get number of pin created in order to set the lenght of the array
-        int lenght = PinContaminationList.Length + PinThrowableList.Length + PinSpawnList.Length;
-        PinList = new Pin[lenght];
+        if (PinContaminationList.Length == 0 || PinSpawnList.Length == 0)
+        {
+            OpenAlertText("You need to have at least one spawn point and contamination area");
+        }
+        else
+        {
+            //get number of pin created in order to set the lenght of the array
+            int lenght = PinContaminationList.Length + PinThrowableList.Length + PinSpawnList.Length;
+            PinList = new Pin[lenght];
 
-        int index = 0;
-        //transforming every object in array into usable pin object
-        foreach (GameObject PinContamination in PinContaminationList)
-        {
-            PinList[index] = new Pin();
-            PinList[index].PinType = "PinContamination";
-            PinList[index].PinPosition = PinContamination.transform.localPosition.ToString();
-            index += 1;
-        }
-        foreach (GameObject PinThrowable in PinThrowableList)
-        {
-            PinList[index] = new Pin();
-            PinList[index].PinType = "PinThrowable";
-            PinList[index].PinPosition = PinThrowable.transform.localPosition.ToString();
-            index += 1;
-        }
-        foreach (GameObject PinSpawn in PinSpawnList)
-        {
-            PinList[index] = new Pin();
-            PinList[index].PinType = "PinSpawn";
-            PinList[index].PinPosition = PinSpawn.transform.localPosition.ToString();
-            index += 1;
-        }
+            int index = 0;
+            //transforming every object in array into usable pin object
+            foreach (GameObject PinContamination in PinContaminationList)
+            {
+                PinList[index] = new Pin();
+                PinList[index].PinType = "PinContamination";
+                PinList[index].PinPosition = PinContamination.transform.localPosition.ToString();
+                index += 1;
+            }
+            foreach (GameObject PinThrowable in PinThrowableList)
+            {
+                PinList[index] = new Pin();
+                PinList[index].PinType = "PinThrowable";
+                PinList[index].PinPosition = PinThrowable.transform.localPosition.ToString();
+                index += 1;
+            }
+            foreach (GameObject PinSpawn in PinSpawnList)
+            {
+                PinList[index] = new Pin();
+                PinList[index].PinType = "PinSpawn";
+                PinList[index].PinPosition = PinSpawn.transform.localPosition.ToString();
+                index += 1;
+            }
 
-        //converting array to json and saving the file
-        string json = JsonConvert.SerializeObject(PinList);
-        string path = Path.Combine(Application.persistentDataPath, inputField.text + ".json");
-        File.WriteAllText(path, json);
-        //ajouter message de succès 
-        OpenAlertText("Success");
+            //converting array to json and saving the file
+            string json = JsonConvert.SerializeObject(PinList);
+            string path = Path.Combine(Application.persistentDataPath, inputField.text + ".json");
+            File.WriteAllText(path, json);
+            OpenAlertText("Success");
+        }
     }
 
 

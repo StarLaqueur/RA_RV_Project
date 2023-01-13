@@ -56,53 +56,57 @@ extern void PinManager_Update_m9581896B79018B343699664B4148B7205D1F1270 (void);
 extern void PinManager_OpenAlertText_m3A17ABD3591BBC8F0DA58BD87759635D8E51D60B (void);
 // 0x00000016 System.Void PinManager::Close()
 extern void PinManager_Close_m60FB5BD1763D4D253443096DEEF97217712D0065 (void);
-// 0x00000017 System.Void PinManager::.ctor()
+// 0x00000017 System.Void PinManager::ClearButtonOnClick()
+extern void PinManager_ClearButtonOnClick_mAFD389125A065BA90DE8C30D50A31E1DE208C724 (void);
+// 0x00000018 System.Void PinManager::DeleteAllPins()
+extern void PinManager_DeleteAllPins_m1E0ECCE6AA37511E674D6EB953A1B7E5F79152E0 (void);
+// 0x00000019 System.Void PinManager::.ctor()
 extern void PinManager__ctor_mC735AF0E2FF2DCBB85424CC43C8A2CBEE51FF275 (void);
-// 0x00000018 System.Void PlayerHealth::TakeDamage(System.Int32)
+// 0x0000001A System.Void PlayerHealth::TakeDamage(System.Int32)
 extern void PlayerHealth_TakeDamage_mB6C8B2F391600A980FC91EE61150A4C862E94071 (void);
-// 0x00000019 System.Void PlayerHealth::.ctor()
+// 0x0000001B System.Void PlayerHealth::.ctor()
 extern void PlayerHealth__ctor_m6A07958FCBF285AA65AB66D48C3EB198068F37BE (void);
-// 0x0000001A System.Void MouseLook::Start()
+// 0x0000001C System.Void MouseLook::Start()
 extern void MouseLook_Start_m08FD16A47A96624540CD1B8EBA5FFAA1FD75E686 (void);
-// 0x0000001B System.Void MouseLook::Update()
+// 0x0000001D System.Void MouseLook::Update()
 extern void MouseLook_Update_m18C0A114A78C19B888A9F74CA1FE5A837DF9E42A (void);
-// 0x0000001C System.Void MouseLook::FixedUpdate()
+// 0x0000001E System.Void MouseLook::FixedUpdate()
 extern void MouseLook_FixedUpdate_m6DD384F8D155E560A388F0DDAB18BD1B352B0D48 (void);
-// 0x0000001D System.Void MouseLook::.ctor()
+// 0x0000001F System.Void MouseLook::.ctor()
 extern void MouseLook__ctor_m4C8A79A3CB8D46D3E22E3AB1F645D41ED589312B (void);
-// 0x0000001E System.Void Turn_Move::Start()
+// 0x00000020 System.Void Turn_Move::Start()
 extern void Turn_Move_Start_mB3C018938F109D98F8CE16C6BE7355FB188DE276 (void);
-// 0x0000001F System.Void Turn_Move::Update()
+// 0x00000021 System.Void Turn_Move::Update()
 extern void Turn_Move_Update_mA7D9707133B5A223DAFF68F6A371CCA37407BF10 (void);
-// 0x00000020 System.Void Turn_Move::.ctor()
+// 0x00000022 System.Void Turn_Move::.ctor()
 extern void Turn_Move__ctor_mBDCD7D294C0363305AD9CB58297969C675C3544A (void);
-// 0x00000021 System.Void vr_vs_kms.ContaminationArea::Start()
+// 0x00000023 System.Void vr_vs_kms.ContaminationArea::Start()
 extern void ContaminationArea_Start_m8CA05880CC137EE0491B8500CC778D85F7553AC1 (void);
-// 0x00000022 System.Void vr_vs_kms.ContaminationArea::populateParticleSystemCache()
+// 0x00000024 System.Void vr_vs_kms.ContaminationArea::populateParticleSystemCache()
 extern void ContaminationArea_populateParticleSystemCache_m2742719E1BECF5E96D0AE7B042909DA7BD4430E2 (void);
-// 0x00000023 System.Void vr_vs_kms.ContaminationArea::setupCullingGroup()
+// 0x00000025 System.Void vr_vs_kms.ContaminationArea::setupCullingGroup()
 extern void ContaminationArea_setupCullingGroup_mAF5D8909579E09334DCEA394E312A26725A91126 (void);
-// 0x00000024 System.Void vr_vs_kms.ContaminationArea::OnStateChanged(UnityEngine.CullingGroupEvent)
+// 0x00000026 System.Void vr_vs_kms.ContaminationArea::OnStateChanged(UnityEngine.CullingGroupEvent)
 extern void ContaminationArea_OnStateChanged_m841A6244938CBB7172A11CF9D2668B58E7A5E10F (void);
-// 0x00000025 System.Void vr_vs_kms.ContaminationArea::OnTriggerExit(UnityEngine.Collider)
+// 0x00000027 System.Void vr_vs_kms.ContaminationArea::OnTriggerExit(UnityEngine.Collider)
 extern void ContaminationArea_OnTriggerExit_m40DFCA8814BDB803AC14E65ABDD74F4233F2F1F5 (void);
-// 0x00000026 System.Void vr_vs_kms.ContaminationArea::Update()
+// 0x00000028 System.Void vr_vs_kms.ContaminationArea::Update()
 extern void ContaminationArea_Update_m37F996316105CA8B8133EDE502E842456EE11A73 (void);
-// 0x00000027 System.Void vr_vs_kms.ContaminationArea::ColorParticle(UnityEngine.ParticleSystem,UnityEngine.Color,UnityEngine.Color)
+// 0x00000029 System.Void vr_vs_kms.ContaminationArea::ColorParticle(UnityEngine.ParticleSystem,UnityEngine.Color,UnityEngine.Color)
 extern void ContaminationArea_ColorParticle_m04E7DB3B310D9832FB10D40FA053B8DA25C8747F (void);
-// 0x00000028 System.Void vr_vs_kms.ContaminationArea::BelongsToNobody()
+// 0x0000002A System.Void vr_vs_kms.ContaminationArea::BelongsToNobody()
 extern void ContaminationArea_BelongsToNobody_mEDE5D3FA450083E8E58AD452FDD0BB47E7D27B95 (void);
-// 0x00000029 System.Void vr_vs_kms.ContaminationArea::BelongsToVirus()
+// 0x0000002B System.Void vr_vs_kms.ContaminationArea::BelongsToVirus()
 extern void ContaminationArea_BelongsToVirus_m165CC7909BA93B099B085A9F1487665C91F995CE (void);
-// 0x0000002A System.Void vr_vs_kms.ContaminationArea::BelongsToScientists()
+// 0x0000002C System.Void vr_vs_kms.ContaminationArea::BelongsToScientists()
 extern void ContaminationArea_BelongsToScientists_m8563FC5C39FBBF96647EF8299E703920808C9A0F (void);
-// 0x0000002B System.Void vr_vs_kms.ContaminationArea::OnDestroy()
+// 0x0000002D System.Void vr_vs_kms.ContaminationArea::OnDestroy()
 extern void ContaminationArea_OnDestroy_m015EFF57F98EE41DEE49C4EE56996E62B0E905A6 (void);
-// 0x0000002C System.Void vr_vs_kms.ContaminationArea::OnDrawGizmos()
+// 0x0000002E System.Void vr_vs_kms.ContaminationArea::OnDrawGizmos()
 extern void ContaminationArea_OnDrawGizmos_mC50A4E9A692CC0B275C123BF10668CE094B40829 (void);
-// 0x0000002D System.Void vr_vs_kms.ContaminationArea::.ctor()
+// 0x0000002F System.Void vr_vs_kms.ContaminationArea::.ctor()
 extern void ContaminationArea__ctor_mE21AB06987CE35504D208A3A6CCC8771BE5141FE (void);
-static Il2CppMethodPointer s_methodPointers[45] = 
+static Il2CppMethodPointer s_methodPointers[47] = 
 {
 	DenySpecialCharacterInInput_Start_m01B0CD81886E80D530B16D66EE77928FFB3E7898,
 	DenySpecialCharacterInInput_Update_m16298296FE6E12C6CE2A737E187A2B4FC0CD94E3,
@@ -126,6 +130,8 @@ static Il2CppMethodPointer s_methodPointers[45] =
 	PinManager_Update_m9581896B79018B343699664B4148B7205D1F1270,
 	PinManager_OpenAlertText_m3A17ABD3591BBC8F0DA58BD87759635D8E51D60B,
 	PinManager_Close_m60FB5BD1763D4D253443096DEEF97217712D0065,
+	PinManager_ClearButtonOnClick_mAFD389125A065BA90DE8C30D50A31E1DE208C724,
+	PinManager_DeleteAllPins_m1E0ECCE6AA37511E674D6EB953A1B7E5F79152E0,
 	PinManager__ctor_mC735AF0E2FF2DCBB85424CC43C8A2CBEE51FF275,
 	PlayerHealth_TakeDamage_mB6C8B2F391600A980FC91EE61150A4C862E94071,
 	PlayerHealth__ctor_m6A07958FCBF285AA65AB66D48C3EB198068F37BE,
@@ -150,7 +156,7 @@ static Il2CppMethodPointer s_methodPointers[45] =
 	ContaminationArea_OnDrawGizmos_mC50A4E9A692CC0B275C123BF10668CE094B40829,
 	ContaminationArea__ctor_mE21AB06987CE35504D208A3A6CCC8771BE5141FE,
 };
-static const int32_t s_InvokerIndices[45] = 
+static const int32_t s_InvokerIndices[47] = 
 {
 	5477,
 	5477,
@@ -173,6 +179,8 @@ static const int32_t s_InvokerIndices[45] =
 	5477,
 	5477,
 	4343,
+	5477,
+	5477,
 	5477,
 	5477,
 	4322,
@@ -202,7 +210,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	45,
+	47,
 	s_methodPointers,
 	0,
 	NULL,

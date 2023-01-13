@@ -8,6 +8,9 @@ public class PinManager : MonoBehaviour
     public Toggle ContaminationToggle;
     public Toggle ThrowableToggle;
     public Toggle SpawnToggle;
+    public Toggle DeleteToggle;
+
+    public Button ClearButton;
 
     //Pins prefab and parent
     public GameObject PinContamination;
@@ -26,13 +29,20 @@ public class PinManager : MonoBehaviour
     public Button NameContinueButton;
     public Text NameContinueText;
     public int MaxPinAmountByType;
+    public Button ClearConfirmStopButton;
+    public Button ClearConfirmContinueButton;
+    public GameObject AlertClearConfirm;
 
     void Start()
     {
         //initiate base state
         ContaminationToggle.GetComponent<Toggle>().isOn = false;
         ThrowableToggle.GetComponent<Toggle>().isOn = false;
+        DeleteToggle.GetComponent<Toggle>().isOn = false;
         SpawnToggle.GetComponent<Toggle>().isOn = true;
+
+        Button ClearBtn = ClearButton.GetComponent<Button>();
+        ClearButton.onClick.AddListener(ClearButtonOnClick);
     }
 
     void Update()
@@ -43,14 +53,8 @@ public class PinManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            
-            
-
             //get number of pin created in order to set the lenght of the array
             int lenght = PinContaminationList.Length;
-
-
-
 
             if (Physics.Raycast(ray, out hit))
             {
@@ -93,6 +97,14 @@ public class PinManager : MonoBehaviour
                             Instantiate(PinSpawn, hit.point, Quaternion.identity, Parent.transform);
                         }
                     }
+                } 
+                else if (hit.collider.tag == "PinContamination" || hit.collider.tag == "PinThrowable" || hit.collider.tag == "PinSpawn")
+                {
+                    // Delete existing pins
+                    if (DeleteToggle.GetComponent<Toggle>().isOn)
+                    {
+                        Destroy(hit.collider.gameObject);
+                    }
                 }
             }
         }
@@ -106,11 +118,47 @@ public class PinManager : MonoBehaviour
         NameContinueText.GetComponent<UnityEngine.UI.Text>().text = AlertTextValue;
         NameContinueButton.onClick.AddListener(Close);
     }
+    
+    //fuction closing all modals
     private void Close()
     {
         NameContinueButton.onClick.RemoveAllListeners();
         AlertBackground.SetActive(false);
         AlertText.SetActive(false);
         NameContinueText.GetComponent<UnityEngine.UI.Text>().text = "";
+        ClearConfirmContinueButton.onClick.RemoveAllListeners();
+        ClearConfirmStopButton.onClick.RemoveAllListeners();
+        AlertClearConfirm.SetActive(false);
+    }
+
+    void ClearButtonOnClick()
+    {
+        AlertBackground.SetActive(true);
+        AlertClearConfirm.SetActive(true);
+
+        ClearConfirmContinueButton.onClick.AddListener(DeleteAllPins);
+        ClearConfirmContinueButton.onClick.AddListener(Close);
+
+        ClearConfirmStopButton.onClick.AddListener(Close);
+    }
+
+        void DeleteAllPins()
+    {
+        //delete all pins
+        PinContaminationList = GameObject.FindGameObjectsWithTag("PinContamination");
+        PinThrowableList = GameObject.FindGameObjectsWithTag("PinThrowable");
+        PinSpawnList = GameObject.FindGameObjectsWithTag("PinSpawn");
+        foreach (GameObject PinContamination in PinContaminationList)
+        {
+            Destroy(PinContamination);
+        }
+        foreach (GameObject PinThrowable in PinThrowableList)
+        {
+            Destroy(PinThrowable);
+        }
+        foreach (GameObject PinSpawn in PinSpawnList)
+        {
+            Destroy(PinSpawn);
+        }
     }
 }

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Antoine\\Documents\\GitHub\\Groupe_1_RARV_CESI\\Projet App AR\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-mo\\values-mo.xml",
+            "outputFile": "C:\\Users\\Antoine\\Documents\\GitHub\\RA_RV_Project\\Projet App AR\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-mo\\values-mo.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Antoine\\.gradle\\caches\\transforms-2\\files-2.1\\16e84a82246e39f10f24b4734dc13f8e\\core-1.22.0\\res\\values-mo\\values.xml",
