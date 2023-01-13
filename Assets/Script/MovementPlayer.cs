@@ -8,13 +8,15 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
 
     public CharacterController controller;
     private Transform cam;
+    
 
     private float rotationSpeed = 14f;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
     private bool isGrounded;
+    public GameObject impactEffect;
+    //public ParticleSystem muzzleflash;
 
-    
     private Vector3 playerVelocity;
     private float playerSpeed = 5f;
     
@@ -23,10 +25,10 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
 
     public float groundDistance = 0.2f;
     public LayerMask groundMask;
-    
 
+    [SerializeField] private LayerMask remotePlayerMask;
+    [SerializeField] private Transform shootPoint;
 
-    public float turnSmoothTime = 0.1f;
 
     private void Start()
     {
@@ -72,6 +74,12 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         
+            if(Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("tir");
+                Shoot();
+            }
+            
     }
 
     private void Jump()
@@ -79,5 +87,16 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
     }
 
+    private void Shoot()
+    {
+        //muzzleflash.Play();
+        RaycastHit hit;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, remotePlayerMask))
+        {
+            
+            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGO, 2f);
+        }
+    }
 
 }
