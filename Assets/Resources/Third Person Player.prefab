@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2153807175445112423}
   - component: {fileID: 2153807175445112408}
   - component: {fileID: 2447387681567301623}
-  - component: {fileID: 2836981926647971919}
-  - component: {fileID: 4891382616536187722}
+  - component: {fileID: 1782219748342273599}
+  - component: {fileID: 6381911216178315716}
   m_Layer: 9
   m_Name: Scientifique
   m_TagString: Untagged
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!54 &2836981926647971919
+--- !u!54 &1782219748342273599
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +112,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!136 &4891382616536187722
+--- !u!136 &6381911216178315716
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,6 +225,7 @@ MonoBehaviour:
   aimCam: {fileID: 750156041639329861}
   affixGun: {fileID: 1378844786873009306}
   shootPoint: {fileID: 7422883588144911910}
+  prefabThird: {fileID: 5593381128743669900}
   controller3RD: {fileID: 2153807175445112423}
   movementPlayer: {fileID: 2153807175445112408}
 --- !u!1 &5634966314925968542
@@ -407,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 134812, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 449102, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_RootOrder
@@ -465,6 +466,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 134812, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
   m_PrefabInstance: {fileID: 1378844786872879622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3598831117685043087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378844786873009306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8a5de2b0f8d98499f1676797353c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
+  remotePlayerMask:
+    serializedVersion: 2
+    m_Bits: 1472
+  thirdCamera: {fileID: 5634966316536609407}
+  damage: 1
 --- !u!114 &5432169340763559262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,6 +773,14 @@ PrefabInstance:
       propertyPath: m_CameraDistance
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7879623243148285815, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
+      propertyPath: m_AmplitudeGain
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879623243148285815, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
+      propertyPath: m_FrequencyGain
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
 --- !u!4 &4785461105104135524 stripped
@@ -860,6 +887,14 @@ PrefabInstance:
     - target: {fileID: 7879623243148285813, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
       propertyPath: m_CameraDistance
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879623243148285815, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
+      propertyPath: m_AmplitudeGain
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879623243148285815, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
+      propertyPath: m_FrequencyGain
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
