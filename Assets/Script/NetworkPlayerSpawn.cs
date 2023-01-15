@@ -29,6 +29,7 @@ public class NetworkPlayerSpawn : MonoBehaviour
         else if (PlayerPrefs.GetInt(gameOption, 0) == 1)
         {
             PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+
             Debug.Log("3RD bejbe");
         }
     }

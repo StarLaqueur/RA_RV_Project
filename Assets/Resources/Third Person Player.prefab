@@ -72,6 +72,7 @@ MonoBehaviour:
   gravity: -9.81
   jumpHeight: 3
   impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
+  thirdPersonScript: {fileID: 822615282740409348}
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
