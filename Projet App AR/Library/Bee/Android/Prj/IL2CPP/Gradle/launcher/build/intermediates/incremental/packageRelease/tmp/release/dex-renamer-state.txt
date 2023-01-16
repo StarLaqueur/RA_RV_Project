@@ -1,4 +1,4 @@
-#Fri Jan 13 14:29:34 CET 2023
-base.0=C\:\\Users\\Antoine\\Documents\\GitHub\\RA_RV_Project\\Projet App AR\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
+#Thu Jan 12 16:25:45 CET 2023
+base.0=C\:\\Users\\Antoine\\Documents\\GitHub\\Groupe_1_RARV_CESI\\Projet App AR\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

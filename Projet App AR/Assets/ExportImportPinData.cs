@@ -65,7 +65,7 @@ public class ExportImportPinData : MonoBehaviour
     void ExportButtonOnClick()
     {
         if (inputField.text != "") {
-            if (File.Exists(Application.dataPath + "/" + inputField.text + ".json")) {
+            if (File.Exists(Application.persistentDataPath + "/" + inputField.text + ".json")) {
                 OpenAlertExist();
             } else {
                 SavePinsData();
@@ -155,8 +155,8 @@ public class ExportImportPinData : MonoBehaviour
         AlertExist.SetActive(true);
         AlertText.SetActive(false);
 
-        ContinueButton.onClick.AddListener(SavePinsData);
         ContinueButton.onClick.AddListener(Close);
+        ContinueButton.onClick.AddListener(SavePinsData);
 
         StopButton.onClick.AddListener(Close);
     }
@@ -219,6 +219,7 @@ public class ExportImportPinData : MonoBehaviour
             string json = JsonConvert.SerializeObject(PinList);
             string path = Path.Combine(Application.persistentDataPath, inputField.text + ".json");
             File.WriteAllText(path, json);
+            //ajouter message de succès 
             OpenAlertText("Success");
         }
     }
