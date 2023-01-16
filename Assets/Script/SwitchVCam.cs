@@ -6,6 +6,8 @@ public class SwitchVCam : MonoBehaviour
     //public GameObject Reticle;
 
     Cinemachine.CinemachineVirtualCameraBase vcam;
+    [SerializeField] private Canvas thirdPersonCanvas;
+    [SerializeField] private Canvas aimCanvas;
     bool boosted = false;
 
     void Start()
@@ -23,12 +25,16 @@ public class SwitchVCam : MonoBehaviour
                 {
                     vcam.Priority += PriorityBoostAmount;
                     boosted = true;
+                    thirdPersonCanvas.enabled = false;
+                    aimCanvas.enabled = true;
                 }
             }
             else if (boosted)
             {
                 vcam.Priority -= PriorityBoostAmount;
                 boosted = false;
+                thirdPersonCanvas.enabled = true;
+                aimCanvas.enabled = false;
             }
         }
         /*if (Reticle != null)
