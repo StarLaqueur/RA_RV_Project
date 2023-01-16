@@ -3,7 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class MovementPlayer : MonoBehaviourPunCallbacks, IDamageable
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
 
     public CharacterController controller;

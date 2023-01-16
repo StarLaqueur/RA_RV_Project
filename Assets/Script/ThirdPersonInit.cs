@@ -7,7 +7,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     PhotonView view;
     public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, shootPoint, prefabThird;
     public CharacterController controller3RD;
-    public MovementPlayer movementPlayer;
+    public PlayerController playerController;
     private string remoteLayerName = "RemotePlayer";
     
    
@@ -26,7 +26,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             affixGun.SetActive(true);
 
             controller3RD.enabled = true;
-            movementPlayer.enabled = true;
+            playerController.enabled = true;
 
             
         } else

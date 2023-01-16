@@ -33,7 +33,7 @@ public class Guns : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
         {
-            Debug.Log(hit.collider.gameObject.name);
+            Debug.Log(hit.collider.gameObject.transform);
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
             GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO, 2f);
