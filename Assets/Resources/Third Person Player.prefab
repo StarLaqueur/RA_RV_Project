@@ -4946,7 +4946,7 @@ MonoBehaviour:
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   remotePlayerMask:
     serializedVersion: 2
     m_Bits: 1472
@@ -5103,6 +5103,7 @@ GameObject:
   - component: {fileID: 6489228094162952933}
   - component: {fileID: 6489228094162952934}
   - component: {fileID: 822615282740409348}
+  - component: {fileID: 4021705428715467577}
   m_Layer: 9
   m_Name: Third Person Player
   m_TagString: Player
@@ -5126,6 +5127,7 @@ Transform:
   - {fileID: 2153807175445112391}
   - {fileID: 4785461105104135524}
   - {fileID: 750156041639329863}
+  - {fileID: 691254610245909403}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5192,6 +5194,7 @@ MonoBehaviour:
   prefabThird: {fileID: 5593381128743669900}
   impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
   controller3RD: {fileID: 2153807175445112423}
+
   movementPlayer: {fileID: 2153807175445112408}
   gunScript: {fileID: 3598831117685043087}
 --- !u!1 &5609616420992835735
@@ -5284,6 +5287,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+
   m_GameObject: {fileID: 5609616420992835735}
   m_Enabled: 1
   m_EditorHideFlags: 0

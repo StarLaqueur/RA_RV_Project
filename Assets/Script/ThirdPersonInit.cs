@@ -7,15 +7,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     PhotonView view;
     public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, prefabThird, impactEffect;
     public CharacterController controller3RD;
-    public MovementPlayer movementPlayer;
     public Guns gunScript;
+    public PlayerController playerController;
     private string remoteLayerName = "RemotePlayer";
-    
-   
+    public float currentHealth = 10;
+
+    NetworkPlayerSpawn networkPlayerSpawn;
+
+
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+        networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+
         if (view.IsMine)
         {
             prefabThird.SetActive(true);
@@ -26,8 +31,8 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             affixGun.SetActive(true);
 
             controller3RD.enabled = true;
-            movementPlayer.enabled = true;
             gunScript.enabled = true;
+            playerController.enabled = true;
 
             
         } else
@@ -49,7 +54,19 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         {
             return;
         }
-        Debug.Log(damage + "shes");
+
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        networkPlayerSpawn.Die();
     }
 
     public void ShootThirdPerson(Vector3 hitPosition, Vector3 hitNormal)
