@@ -3,7 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class MovementPlayer : MonoBehaviourPunCallbacks
+public class MovementPlayer : MonoBehaviourPunCallbacks, IDamageable
 {
 
     public CharacterController controller;
@@ -16,6 +16,7 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
     public float jumpHeight = 3;
     private bool isGrounded;
     public GameObject impactEffect;
+    public ThirdPersonInit thirdPersonScript;
 
     private Vector3 playerVelocity;
     private float playerSpeed = 5f;
@@ -63,10 +64,6 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
             controller.Move(move * Time.deltaTime * playerSpeed);
 
 
-
-            // Changes the height position of the player..
-
-
             playerVelocity.y += gravityValue * 2 * Time.deltaTime;
             controller.Move(playerVelocity * Time.deltaTime);
 
@@ -74,17 +71,16 @@ public class MovementPlayer : MonoBehaviourPunCallbacks
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         
-   /*         if(Input.GetButtonDown("Fire1"))
-            {
-                Debug.Log("tir");
-                Shoot();
-            }
-            */
     }
 
     private void Jump()
     {
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        thirdPersonScript.TakeDamageGo(damage);
     }
 
 

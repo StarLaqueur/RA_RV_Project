@@ -30,7 +30,6 @@ public class Guns : MonoBehaviour
     }
     private void Shoot()
     {
-        //muzzleflash.Play();
         RaycastHit hit;
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
         {

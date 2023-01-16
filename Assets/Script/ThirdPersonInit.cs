@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class ThirdPersonInit : MonoBehaviourPunCallbacks, IDamageable
+public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
     PhotonView view;
     public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, shootPoint, prefabThird;
@@ -35,13 +35,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamageGo(float damage)
     {
         view.RPC("RPC_TakeDamage", RpcTarget.All, damage);
 
     }
 
-/*    [PunRPC]
+    [PunRPC]
     void RPC_TakeDamage(float damage)
     {
         if (!view.IsMine)
@@ -49,7 +49,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks, IDamageable
             return;
         }
         Debug.Log(damage + "shes");
-    }*/
+    }
 
 
 
