@@ -9,12 +9,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public PlayerController playerController;
     private string remoteLayerName = "RemotePlayer";
-    
-   
+    public float currentHealth = 10;
+
+    NetworkPlayerSpawn networkPlayerSpawn;
+
+
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+        networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+
         if (view.IsMine)
         {
             prefabThird.SetActive(true);
@@ -48,7 +53,19 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         {
             return;
         }
-        Debug.Log(damage + "shes");
+
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        networkPlayerSpawn.Die();
     }
 
 
