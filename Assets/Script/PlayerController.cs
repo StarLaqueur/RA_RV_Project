@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public LayerMask groundMask;
 
     [SerializeField] private LayerMask remotePlayerMask;
-    [SerializeField] private Transform shootPoint;
 
 
     private void Start()

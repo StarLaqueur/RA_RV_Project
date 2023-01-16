@@ -27,10 +27,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if(PV.IsMine)
-        {
-            CreateController();
-        }
+        CreateController();
     }
 
     void CreateController()
@@ -42,7 +39,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 
         if (PlayerPrefs.GetInt(gameOption, 0) == 0)
         {
-           controller = PhotonNetwork.Instantiate(VRPrefab.name, randomPosition, Quaternion.identity);
+           controller = PhotonNetwork.Instantiate(VRPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
             Debug.Log("VR généré");
         }
         else if (PlayerPrefs.GetInt(gameOption, 0) == 1)
