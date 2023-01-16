@@ -5,8 +5,9 @@ using Photon.Pun;
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
     PhotonView view;
-    public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, shootPoint, prefabThird;
+    public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, prefabThird, impactEffect;
     public CharacterController controller3RD;
+    public Guns gunScript;
     public PlayerController playerController;
     private string remoteLayerName = "RemotePlayer";
     public float currentHealth = 10;
@@ -27,10 +28,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             cinemachineCam.SetActive(true);
             playerGFX.SetActive(true);
             aimCam.SetActive(true);
-            shootPoint.SetActive(true);
             affixGun.SetActive(true);
 
             controller3RD.enabled = true;
+            gunScript.enabled = true;
             playerController.enabled = true;
 
             
@@ -66,6 +67,18 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     private void Die()
     {
         networkPlayerSpawn.Die();
+    }
+
+    public void ShootThirdPerson(Vector3 hitPosition, Vector3 hitNormal)
+    {
+        view.RPC("RPC_Shoot", RpcTarget.All, hitPosition, hitNormal);
+    }
+
+    [PunRPC]
+    void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
+    {
+        GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
+        Destroy(impactGO, 2f);
     }
 
 

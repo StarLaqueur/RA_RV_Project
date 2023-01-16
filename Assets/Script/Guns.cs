@@ -5,11 +5,14 @@ using UnityEngine;
 public class Guns : MonoBehaviour
 {
     public GameObject impactEffect;
+    public ThirdPersonInit thirdPersonScript;
 
 
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Camera thirdCamera;
     [SerializeField] int damage;
+    public ParticleSystem muzzleflash;
+    private bool authorizedToShoot = true;
 
     private float nextTimeToFire = 0f;
 
@@ -22,21 +25,28 @@ public class Guns : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && authorizedToShoot)
         {
             Shoot();
+            StartCoroutine(WaitReload());
         }
 
     }
     private void Shoot()
     {
+        muzzleflash.Play();
         RaycastHit hit;
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
         {
-            Debug.Log(hit.collider.gameObject.transform);
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
-            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactGO, 2f);
+            Debug.Log(hit.collider.gameObject.name);
+            thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
+    }
+    IEnumerator WaitReload()
+    {
+        authorizedToShoot = false;
+        yield return new WaitForSeconds(1.5f);
+        authorizedToShoot = true;
     }
 }
