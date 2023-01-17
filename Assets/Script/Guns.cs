@@ -14,8 +14,6 @@ public class Guns : MonoBehaviour
     public ParticleSystem muzzleflash;
     private bool authorizedToShoot = true;
 
-    private float nextTimeToFire = 0f;
-
     void Start()
     {
 
@@ -34,12 +32,11 @@ public class Guns : MonoBehaviour
     }
     private void Shoot()
     {
-        muzzleflash.Play();
+        thirdPersonScript.ShootParticule();
         RaycastHit hit;
-        if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
+        if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit, Mathf.Infinity, remotePlayerMask))
         {
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
-            Debug.Log(hit.collider.gameObject.name);
             thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
     }

@@ -27,10 +27,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if(PV.IsMine)
-        {
-            CreateController();
-        }
+        CreateController();
     }
 
     void CreateController()

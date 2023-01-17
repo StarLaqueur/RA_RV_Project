@@ -24,7 +24,8 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public InputActionProperty shootActionButton;
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
-    private string remoteLayerName = "RemotePlayer";
+    private string vrPlayerMask = "VRPlayerMask";
+    [SerializeField] private ParticleSystem muzzleFlash;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
-            gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
+            gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
         }
  
     }
@@ -110,5 +111,16 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
         
         Destroy(impactGO, 2f);
+    }
+
+    public void ShootParticule()
+    {
+        view.RPC("RPC_ShootParticule", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_ShootParticule()
+    {
+        muzzleFlash.Play();
     }
 }
