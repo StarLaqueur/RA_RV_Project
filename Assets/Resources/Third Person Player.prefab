@@ -4880,8 +4880,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2153807175445112391}
   - component: {fileID: 2153807175445112423}
-  - component: {fileID: 2153807175445112408}
   - component: {fileID: 2447387681567301623}
+  - component: {fileID: 2875031735963371666}
   - component: {fileID: 1782219748342273599}
   - component: {fileID: 6381911216178315716}
   m_Layer: 9
@@ -4926,30 +4926,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.0001
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &2153807175445112408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2153807175445112409}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879f7ef61f883b648a24a8fd1c1f73a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 2153807175445112423}
-  gravity: -9.81
-  jumpHeight: 3
-  impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
-  thirdPersonScript: {fileID: 822615282740409348}
-  groundDistance: 0.2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  remotePlayerMask:
-    serializedVersion: 2
-    m_Bits: 1472
 --- !u!114 &2447387681567301623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4966,6 +4942,27 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &2875031735963371666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153807175445112409}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8aa5388ab4e72c409b3e8bb77ab9459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2153807175445112423}
+  gravity: -9.81
+  jumpHeight: 3
+  impactEffect: {fileID: 902312218625666079}
+  thirdPersonScript: {fileID: 822615282740409348}
+  groundDistance: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &1782219748342273599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5192,11 +5189,9 @@ MonoBehaviour:
   impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
   controller3RD: {fileID: 2153807175445112423}
   gunScript: {fileID: 3598831117685043087}
-  playerController: {fileID: 2153807175445112408}
+  playerController: {fileID: 2875031735963371666}
   currentHealth: 10
   muzzleflash: {fileID: 8358595552373229350}
-  json_gamerules: 
-  master_Health: 0
 --- !u!1 &5609616420992835735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,7 +5695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 134812, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 449102, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_RootOrder
@@ -5770,17 +5765,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8a5de2b0f8d98499f1676797353c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffect: {fileID: 902312218625666079}
   thirdPersonScript: {fileID: 822615282740409348}
   remotePlayerMask:
     serializedVersion: 2
-    m_Bits: 1472
+    m_Bits: 3520
   thirdCamera: {fileID: 5634966316536609407}
   damage: 1
-  muzzleflash: {fileID: 8358595552373229350}
-  nextTimeToFire: 0
-  json_gamerules: 
-  master_shot_cd: 0
 --- !u!114 &5432169340763559262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6236,6 +6226,49 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!114 &4761610784348761195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785461105451752653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 0
+  m_LookaheadIgnoreY: 0
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_TargetMovementOnly: 1
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_CameraDistance: 10
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
+  m_DeadZoneDepth: 0
+  m_UnlimitedSoftZone: 0
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
+  m_BiasX: 0
+  m_BiasY: 0
+  m_CenterOnActivate: 1
+  m_GroupFramingMode: 2
+  m_AdjustmentMode: 0
+  m_GroupFramingSize: 0.8
+  m_MaxDollyIn: 5000
+  m_MaxDollyOut: 5000
+  m_MinimumDistance: 1
+  m_MaximumDistance: 5000
+  m_MinimumFOV: 3
+  m_MaximumFOV: 60
+  m_MinimumOrthoSize: 1
+  m_MaximumOrthoSize: 5000
 --- !u!1001 &7436319731009531548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6366,3 +6399,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7879623242934890203, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
   m_PrefabInstance: {fileID: 7436319731009531548}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &750156041853794798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7879623243148285810, guid: 91665b289afc8f54ba317fab93f29c5e, type: 3}
+  m_PrefabInstance: {fileID: 7436319731009531548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7074383019109723437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750156041853794798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 0
+  m_LookaheadIgnoreY: 0
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_TargetMovementOnly: 1
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_CameraDistance: 10
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
+  m_DeadZoneDepth: 0
+  m_UnlimitedSoftZone: 0
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
+  m_BiasX: 0
+  m_BiasY: 0
+  m_CenterOnActivate: 1
+  m_GroupFramingMode: 2
+  m_AdjustmentMode: 0
+  m_GroupFramingSize: 0.8
+  m_MaxDollyIn: 5000
+  m_MaxDollyOut: 5000
+  m_MinimumDistance: 1
+  m_MaximumDistance: 5000
+  m_MinimumFOV: 3
+  m_MaximumFOV: 60
+  m_MinimumOrthoSize: 1
+  m_MaximumOrthoSize: 5000

@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 { 
-
     [SerializeField] public const float maxHealth = 10;
     public float currentHealth = maxHealth;
-
 
     public void IsShot(float amount)
     {
@@ -19,5 +17,4 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Death");
         }
     }
-
 }

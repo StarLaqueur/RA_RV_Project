@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public CharacterController controller;
     private Transform cam;
 
-    
-
     private float rotationSpeed = 14f;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
@@ -23,12 +21,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     
     private float gravityValue = -9.81f;
 
-
     public float groundDistance = 0.2f;
     public LayerMask groundMask;
-
-    [SerializeField] private LayerMask remotePlayerMask;
-
 
     private void Start()
     {

@@ -16,9 +16,6 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     const string gameOption = "gameSetup";
     // Start is called before the first frame update
 
-    /*public string json_gamerules;
-    public JSON_Format object_gamerules;
-    public GameRules gamerules = new GameRules();*/
 
     PhotonView PV;
 
@@ -27,8 +24,6 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     void Awake()
     {
         PV = GetComponent<PhotonView>();
-        //json_gamerules = gamerules.gamerules_read();
-        //object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
     }
 
     void Start()
@@ -52,7 +47,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         {
             controller = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
 
-            //Debug.Log("3RD bejbe");
+            Debug.Log("3RD bejbe");
         }
     }
 

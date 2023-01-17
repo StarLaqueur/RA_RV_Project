@@ -12,18 +12,16 @@ public class CreateJoinRoom : MonoBehaviourPunCallbacks
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(createInput.text);
-        PhotonNetwork.LoadLevel("InterfaceScene");
+/*        PhotonNetwork.LoadLevel("InterfaceScene");*/
     }
 
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom(joinInput.text);
-
     }
 
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("GameScene");
-
     }
 }

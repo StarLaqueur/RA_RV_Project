@@ -27,20 +27,20 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private string vrPlayerMask = "VRPlayerMask";
     [SerializeField] private ParticleSystem muzzleFlash;
 
-    public float nextTimeToFire;
+/*    public float nextTimeToFire;
     public float currentHealth;
     public string json_gamerules;
     public float master_shot_cd;
     public float master_Health;
     public JSON_Format object_gamerules;
-    public GameRules gamerules = new GameRules();
+    public GameRules gamerules = new GameRules();*/
 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
 
-        if (PhotonNetwork.IsMasterClient)
+/*        if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("enter master");
             json_gamerules = gamerules.gamerules_read();
@@ -51,7 +51,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             view.RPC("RPC_ReadShotCd_VR", RpcTarget.OthersBuffered, master_shot_cd);
             currentHealth = master_Health;
             nextTimeToFire = master_shot_cd;
-        }
+        }*/
 
         if (view.IsMine)
         {
@@ -101,7 +101,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(nextTimeToFire);
+        yield return new WaitForSeconds(1.5f);
         authorizedToShoot = true;
     }
 
@@ -143,8 +143,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_ShootParticule()
     {
         muzzleFlash.Play();
+    }
         
-    [PunRPC]
+/*    [PunRPC]
     void RPC_ReadHealthVR(float health)
     {
         currentHealth = health;
@@ -156,5 +157,5 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         currentHealth = health;
         Debug.Log("masters" + currentHealth);
-    }
+    }*/
 }
