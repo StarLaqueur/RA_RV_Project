@@ -1,16 +1,22 @@
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
     PhotonView view;
     public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, prefabThird, impactEffect;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
     private string remoteLayerName = "RemotePlayer";
     public float currentHealth = 10;
+    public float maxHealth = 10;
+
 
     NetworkPlayerSpawn networkPlayerSpawn;
 
@@ -20,6 +26,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+        
 
         if (view.IsMine)
         {
@@ -38,6 +45,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         } else
         {
             gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
+            Destroy(ui);
         }
     }
 
@@ -56,6 +64,8 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
 
         currentHealth -= damage;
+
+        healthBarImage.fillAmount = currentHealth / maxHealth;
         Debug.Log(currentHealth);
 
         if (currentHealth <= 0)
@@ -66,6 +76,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     private void Die()
     {
+        //Coucou c'est charlou
         networkPlayerSpawn.Die();
     }
 
