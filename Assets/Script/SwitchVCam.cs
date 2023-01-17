@@ -1,29 +1,43 @@
 using UnityEngine;
-using Cinemachine;
 
 public class SwitchVCam : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera defaultCam;
-    [SerializeField] private CinemachineVirtualCamera aimCam;
+    public int PriorityBoostAmount = 10;
+    //public GameObject Reticle;
+
+    Cinemachine.CinemachineVirtualCameraBase vcam;
+    [SerializeField] private Canvas thirdPersonCanvas;
+    [SerializeField] private Canvas aimCanvas;
+    bool boosted = false;
 
     void Start()
     {
-        defaultCam.enabled = true; //true
-        aimCam.enabled = false; //false
+        vcam = GetComponent<Cinemachine.CinemachineVirtualCameraBase>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (vcam != null)
         {
-            defaultCam.enabled = false;
-            aimCam.enabled = true;
+            if (Input.GetMouseButton(1))
+            {
+                if (!boosted)
+                {
+                    vcam.Priority += PriorityBoostAmount;
+                    boosted = true;
+                    thirdPersonCanvas.enabled = false;
+                    aimCanvas.enabled = true;
+                }
+            }
+            else if (boosted)
+            {
+                vcam.Priority -= PriorityBoostAmount;
+                boosted = false;
+                thirdPersonCanvas.enabled = true;
+                aimCanvas.enabled = false;
+            }
         }
-        else
-        {
-            defaultCam.enabled = true;
-            aimCam.enabled = false;
-        }
-
+        /*if (Reticle != null)
+            Reticle.SetActive(boosted);*/
     }
 }

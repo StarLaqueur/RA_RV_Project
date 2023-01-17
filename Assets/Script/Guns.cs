@@ -1,89 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Guns : MonoBehaviour
 {
-
-
-    public float damage = 10f;
-    public float range = 100f;
-    public float fireRate = 15f;
-    public float impactForce = 30f;
-
-    public int maxAmmo = 10;
-    private int currentAmmo;
-    public float reloadTime = 1f;
-    private bool isReloading = false;
-
-    
-    public Camera fpscamera;
-    public ParticleSystem muzzleflash;
     public GameObject impactEffect;
+    public ThirdPersonInit thirdPersonScript;
 
-    private float nextTimeToFire = 0f;
+    [SerializeField] private LayerMask remotePlayerMask;
+    [SerializeField] Camera thirdCamera;
+    [SerializeField] int damage;
+    public ParticleSystem muzzleflash;
 
+    private bool authorizedToShoot = true;
+    AudioSource source;
     void Start()
     {
-        currentAmmo = maxAmmo;
+
+        Debug.Log("shot_cd" + thirdPersonScript.nextTimeToFire);
+        //source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isReloading)
-        {
-            return;
-        }
-        if (currentAmmo <= 0 || (Input.GetKeyDown(KeyCode.R) && currentAmmo!=maxAmmo))
-        {
-            StartCoroutine(Reload());
-            return;
-        }
 
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetMouseButtonDown(0) && authorizedToShoot)
         {
-            nextTimeToFire = Time.time + 1f / fireRate;
+            //source = GetComponent<AudioSource>();
             Shoot();
+            //source.Play();
+            StartCoroutine(WaitReload());
         }
 
     }
-    IEnumerator Reload()
-    {
-        isReloading = true;
-
-        yield return new WaitForSeconds(reloadTime);
-        
-        currentAmmo = maxAmmo;
-        isReloading = false;
-    }
-
-    void Shoot()
+    private void Shoot()
     {
         muzzleflash.Play();
-
-        currentAmmo--;
-
         RaycastHit hit;
-        if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
+        if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
         {
-            
-
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
-            {
-                target.TakeDamage(damage);
-               
-            }
-
-            if (hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
-            }
-
-            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactGO, 2f);
+            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
+            Debug.Log(hit.collider.gameObject.name);
+            thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
-
     }
+    IEnumerator WaitReload()
+    {
+        authorizedToShoot = false;
+        yield return new WaitForSeconds(thirdPersonScript.nextTimeToFire);
+        authorizedToShoot = true;
+    }
+
 }
