@@ -20,7 +20,6 @@ public class Guns : MonoBehaviour
     public GameRules gamerules = new GameRules();
     public float master_shot_cd;
 
-
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -47,12 +46,11 @@ public class Guns : MonoBehaviour
     }
     private void Shoot()
     {
-        muzzleflash.Play();
+        thirdPersonScript.ShootParticule();
         RaycastHit hit;
-        if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit))
+        if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit, Mathf.Infinity, remotePlayerMask))
         {
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
-            Debug.Log(hit.collider.gameObject.name);
             thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
     }

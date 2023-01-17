@@ -41,6 +41,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_TakeDamage
   - RPC_Shoot
+  - RPC_ShootParticule
   - RPC_ReadJson
   - RPC_ReadHealth
   - RPC_ReadShotCD

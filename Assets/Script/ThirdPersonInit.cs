@@ -9,7 +9,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
-    private string remoteLayerName = "RemotePlayer";
+    private string thirdPersonMask = "ThirdPersonMask";
+    public float currentHealth = 10;
+    public ParticleSystem muzzleflash;
+
     NetworkPlayerSpawn networkPlayerSpawn;
 
     public float currentHealth;
@@ -52,7 +55,8 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             
         } else
         {
-            gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
+            gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
+            playerGFX.layer = LayerMask.NameToLayer(thirdPersonMask);
         }
     }
 
@@ -78,6 +82,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             Die();
         }
     }
+    
     [PunRPC]
     void RPC_ReadHealth(float health)
     {
@@ -100,6 +105,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
         Destroy(impactGO, 2f);
+    }
+
+    public void ShootParticule()
+    {
+        view.RPC("RPC_ShootParticule", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_ShootParticule()
+    {
+        muzzleflash.Play();
     }
 
 

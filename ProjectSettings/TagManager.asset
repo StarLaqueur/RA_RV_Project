@@ -16,8 +16,8 @@ TagManager:
   - Wall
   - Roof
   - LocalPlayer
-  - RemotePlayer
-  - 
+  - VRPlayerMask
+  - ThirdPersonMask
   - 
   - 
   - 
