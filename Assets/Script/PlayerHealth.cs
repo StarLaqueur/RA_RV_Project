@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] public const int maxHealth = 10;
-    public int currentHealth = maxHealth;
+    [SerializeField] public const float maxHealth = 10;
+    public float currentHealth = maxHealth;
 
-    public void TakeDamage(int amount)
+    public void IsShot(float amount)
     {
+        Debug.Log("IsShot");
         currentHealth -= amount;
         if(currentHealth <= 0)
         {
