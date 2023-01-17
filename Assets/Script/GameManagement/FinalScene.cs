@@ -16,15 +16,15 @@ public class FinalScene : MonoBehaviour
     IEnumerator GameEnd()
     {
         yield return new WaitForSeconds(1);
-        textMesh.text = "Vous allez être redirigé dans 5 secondes...";
+        textMesh.text = "Vous allez etre redirige dans 5 secondes...";
         yield return new WaitForSeconds(1);
-        textMesh.text = "Vous allez être redirigé dans 4 secondes...";
+        textMesh.text = "Vous allez etre redirige dans 4 secondes...";
         yield return new WaitForSeconds(1);
-        textMesh.text = "Vous allez être redirigé dans 3 secondes...";
+        textMesh.text = "Vous allez etre redirige dans 3 secondes...";
         yield return new WaitForSeconds(1);
-        textMesh.text = "Vous allez être redirigé dans 2 secondes...";
+        textMesh.text = "Vous allez etre redirige dans 2 secondes...";
         yield return new WaitForSeconds(1);
-        textMesh.text = "Vous allez être redirigé dans 1 secondes...";
+        textMesh.text = "Vous allez etre redirige dans 1 secondes...";
         Application.Quit();
     }
 }

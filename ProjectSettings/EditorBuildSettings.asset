@@ -20,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LooseGameScene.unity
     guid: c182bd55fe101b94082118d55dc9387a
-  - enabled: 1
-    path: Assets/Scenes/RespawnScene.unity
-    guid: 41dffe046d2772e4381811c1520161df
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2c5b6966629019f48b03b22c715ccd20, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: b70a0fcdbaf4b944faa11512782b2a76, type: 2}

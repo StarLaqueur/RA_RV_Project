@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class NetworkPlayerSpawn : MonoBehaviour
+public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
     public GameObject playerPrefab;
@@ -12,21 +12,36 @@ public class NetworkPlayerSpawn : MonoBehaviour
     const string gameOption = "gameSetup";
     public GameManagement game;
 
-    // Start is called before the first frame update
+    PhotonView PV;
+
+    GameObject controller;
+
+    void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     void Start()
     {
-        if (PhotonNetwork.PlayerList.Length <= 1)
-        {
-            game.SetPinPoint();
-        }
-     
+        CreateController();
+    }
+
+    public void CreateController()
+    {
+		game.SetPinPoint();
+
         if (PlayerPrefs.GetInt(gameOption, 0) == 0)
         {
-            PhotonNetwork.Instantiate(VRPrefab.name, game.SetSpawnPoint(), Quaternion.identity);
+           controller = PhotonNetwork.Instantiate(VRPrefab.name, game.SetSpawnPoint(), Quaternion.identity, 0, new object[] { PV.ViewID });
         }
         else if (PlayerPrefs.GetInt(gameOption, 0) == 1)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, game.SetSpawnPoint(), Quaternion.identity);
+            controller = PhotonNetwork.Instantiate(playerPrefab.name, game.SetSpawnPoint(), Quaternion.identity, 0, new object[] { PV.ViewID });
         }
+    }
+
+    public void Die()
+    {
+        game.Respawn(controller);
     }
 }

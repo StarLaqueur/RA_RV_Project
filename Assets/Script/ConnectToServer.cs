@@ -32,13 +32,13 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             textMesh.ForceMeshUpdate();
             textMesh.text = "Chargement";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             textMesh.text = "Chargement.";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             textMesh.text = "Chargement..";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             textMesh.text = "Chargement...";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
