@@ -12,9 +12,9 @@ using UnityEngine.UI;
 public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 {
     PhotonView view;
-    
+
     public GameObject locomotionSys, body, impactEffect;
-    
+
     public Camera cameraVR;
     public ActionBasedController xrControllerLeft, xrControllerRight;
     public TrackedPoseDriver tracketDriver;
@@ -33,35 +33,13 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private string vrPlayerMask = "VRPlayerMask";
     [SerializeField] private ParticleSystem muzzleFlash;
 
-    public float nextTimeToFire;
-    public float currentHealth;
-    public string json_gamerules;
-    public float master_shot_cd;
-    public float master_Health;
-    public JSON_Format object_gamerules;
-    public GameRules gamerules = new GameRules();
-
     public float currentHealth = 10;
     public float maxHealth = 10;
 
-    // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("enter master");
-            json_gamerules = gamerules.gamerules_read();
-            object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
-            master_Health = object_gamerules.HP;
-            view.RPC("RPC_ReadHealthVR", RpcTarget.OthersBuffered, master_Health);
-            master_shot_cd = object_gamerules.Shot_Cooldown;
-            view.RPC("RPC_ReadShotCd_VR", RpcTarget.OthersBuffered, master_shot_cd);
-            currentHealth = master_Health;
-            nextTimeToFire = master_shot_cd;
-        }
 
         if (view.IsMine)
         {
@@ -70,7 +48,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             GetComponentInChildren<CharacterControllerDriver>().enabled = true;
             playerVrCharacterController.enabled = true;
             locomotionSys.SetActive(true);
-           
+
 
             cameraVR.enabled = true;
             tracketDriver.enabled = true;
@@ -95,7 +73,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             Destroy(ui);
             gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
         }
- 
+
     }
 
     // Update is called once per frame
@@ -104,15 +82,15 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         if (shootActionButton.action.ReadValue<float>() > 0.1f && authorizedToShoot)
         {
             vrGunScript.Shoot();
-            
+
             StartCoroutine(WaitReload());
         }
     }
-    
+
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(nextTimeToFire);
+        yield return new WaitForSeconds(1.5f);
         authorizedToShoot = true;
     }
 
@@ -156,7 +134,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
     {
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
-        
+
         Destroy(impactGO, 2f);
     }
 
@@ -169,18 +147,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_ShootParticule()
     {
         muzzleFlash.Play();
-        
-    [PunRPC]
-    void RPC_ReadHealthVR(float health)
-    {
-        currentHealth = health;
-        Debug.Log("masters" + currentHealth);
-    }
-    
-    [PunRPC]
-    void RPC_ReadShotCd_VR(float health)
-    {
-        currentHealth = health;
-        Debug.Log("masters" + currentHealth);
+
     }
 }
