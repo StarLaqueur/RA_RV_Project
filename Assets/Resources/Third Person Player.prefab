@@ -5194,6 +5194,8 @@ MonoBehaviour:
   gunScript: {fileID: 3598831117685043087}
   playerController: {fileID: 2153807175445112408}
   currentHealth: 10
+  json_gamerules: 
+  master_Health: 0
 --- !u!1 &5609616420992835735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5775,6 +5777,9 @@ MonoBehaviour:
   thirdCamera: {fileID: 5634966316536609407}
   damage: 1
   muzzleflash: {fileID: 8358595552373229350}
+  nextTimeToFire: 0
+  json_gamerules: 
+  master_shot_cd: 0
 --- !u!114 &5432169340763559262
 MonoBehaviour:
   m_ObjectHideFlags: 0
