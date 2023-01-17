@@ -8,9 +8,9 @@ public class VRGuns : MonoBehaviour
 {
     [SerializeField] private float damage;
     [SerializeField] XRBaseController shooterXRController;
+    [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Transform raycastOrigin;
     public GameObject impactEffect;
-    [SerializeField] private LayerMask remotePlayerMask;
     public ParticleSystem muzzleflash;
     public PlayerVRPrefab playerVRPrefab;
 

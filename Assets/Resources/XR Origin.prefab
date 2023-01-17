@@ -7028,10 +7028,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   shooterXRController: {fileID: 6024181572451438898}
-  raycastOrigin: {fileID: 7339190723247893644}
-  impactEffect: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
   remotePlayerMask:
     serializedVersion: 2
-    m_Bits: 2496
+    m_Bits: 1472
+  raycastOrigin: {fileID: 7339190723247893644}
+  impactEffect: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
   muzzleflash: {fileID: 32210795334820120}
   playerVRPrefab: {fileID: 2991447355110637643}

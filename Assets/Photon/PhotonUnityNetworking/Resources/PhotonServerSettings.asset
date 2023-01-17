@@ -42,11 +42,6 @@ MonoBehaviour:
   - RPC_TakeDamage
   - RPC_Shoot
   - RPC_ShootParticule
-  - RPC_ReadJson
-  - RPC_ReadHealth
-  - RPC_ReadShotCD
-  - RPC_ReadHealthVR
-  - RPC_ReadShotCd_VR
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

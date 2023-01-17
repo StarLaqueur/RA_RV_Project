@@ -27,31 +27,10 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private string vrPlayerMask = "VRPlayerMask";
     [SerializeField] private ParticleSystem muzzleFlash;
 
-    public float nextTimeToFire;
-    public float currentHealth;
-    public string json_gamerules;
-    public float master_shot_cd;
-    public float master_Health;
-    public JSON_Format object_gamerules;
-    public GameRules gamerules = new GameRules();
-
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("enter master");
-            json_gamerules = gamerules.gamerules_read();
-            object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
-            master_Health = object_gamerules.HP;
-            view.RPC("RPC_ReadHealthVR", RpcTarget.OthersBuffered, master_Health);
-            master_shot_cd = object_gamerules.Shot_Cooldown;
-            view.RPC("RPC_ReadShotCd_VR", RpcTarget.OthersBuffered, master_shot_cd);
-            currentHealth = master_Health;
-            nextTimeToFire = master_shot_cd;
-        }
 
         if (view.IsMine)
         {
@@ -101,7 +80,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(nextTimeToFire);
+        yield return new WaitForSeconds(1.5f);
         authorizedToShoot = true;
     }
 
@@ -133,7 +112,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         
         Destroy(impactGO, 2f);
     }
-
     public void ShootParticule()
     {
         view.RPC("RPC_ShootParticule", RpcTarget.All);
@@ -143,18 +121,5 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_ShootParticule()
     {
         muzzleFlash.Play();
-        
-    [PunRPC]
-    void RPC_ReadHealthVR(float health)
-    {
-        currentHealth = health;
-        Debug.Log("masters" + currentHealth);
-    }
-    
-    [PunRPC]
-    void RPC_ReadShotCd_VR(float health)
-    {
-        currentHealth = health;
-        Debug.Log("masters" + currentHealth);
     }
 }
