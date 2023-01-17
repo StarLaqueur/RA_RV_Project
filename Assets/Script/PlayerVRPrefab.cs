@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.XR;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -22,6 +23,11 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public XRInteractorLineVisual xrayInteractorLeft, xrayInteractorRight;
     public CharacterController playerVrCharacterController;
     public InputActionProperty shootActionButton;
+
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
+    NetworkPlayerSpawn networkPlayerSpawn;
+
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
     private string vrPlayerMask = "VRPlayerMask";
@@ -35,10 +41,14 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
 
+    public float currentHealth = 10;
+    public float maxHealth = 10;
+
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+        networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -82,6 +92,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
+            Destroy(ui);
             gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
         }
  
@@ -118,7 +129,22 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         {
             return;
         }
-        Debug.Log(damage + "shes");
+
+        currentHealth -= damage;
+
+        healthBarImage.fillAmount = currentHealth / maxHealth;
+        Debug.Log(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        //Coucou c'est charlou
+        networkPlayerSpawn.Die();
     }
 
     public void ShootVR(Vector3 hitPosition, Vector3 hitNormal)

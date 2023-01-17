@@ -1,16 +1,22 @@
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
     PhotonView view;
     public GameObject localCam, cinemachineCam, playerGFX, aimCam, affixGun, prefabThird, impactEffect;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
     private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
+    public float maxHealth = 10;
+
     public ParticleSystem muzzleflash;
 
     NetworkPlayerSpawn networkPlayerSpawn;
@@ -27,6 +33,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+        
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -55,6 +62,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             
         } else
         {
+            Destroy(ui);
             gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
             playerGFX.layer = LayerMask.NameToLayer(thirdPersonMask);
         }
@@ -75,6 +83,8 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
 
         currentHealth -= damage;
+
+        healthBarImage.fillAmount = currentHealth / maxHealth;
         Debug.Log(currentHealth);
 
         if (currentHealth <= 0)
@@ -92,6 +102,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     private void Die()
     {
+        //Coucou c'est charlou
         networkPlayerSpawn.Die();
     }
 
