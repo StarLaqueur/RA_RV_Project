@@ -3,21 +3,18 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
+public class MovementPlayer : MonoBehaviourPunCallbacks
 {
 
     public CharacterController controller;
     private Transform cam;
 
-    
-
     private float rotationSpeed = 14f;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
     private bool isGrounded;
-    public GameObject impactEffect;
-    public ThirdPersonInit thirdPersonScript;
 
+    
     private Vector3 playerVelocity;
     private float playerSpeed = 5f;
     
@@ -26,9 +23,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public float groundDistance = 0.2f;
     public LayerMask groundMask;
+    
 
-    [SerializeField] private LayerMask remotePlayerMask;
 
+    public float turnSmoothTime = 0.1f;
 
     private void Start()
     {
@@ -63,6 +61,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             controller.Move(move * Time.deltaTime * playerSpeed);
 
 
+
+            // Changes the height position of the player..
+
+
             playerVelocity.y += gravityValue * 2 * Time.deltaTime;
             controller.Move(playerVelocity * Time.deltaTime);
 
@@ -75,11 +77,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void Jump()
     {
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
-    }
-
-    public void TakeDamage(float damage)
-    {
-        thirdPersonScript.TakeDamageGo(damage);
     }
 
 

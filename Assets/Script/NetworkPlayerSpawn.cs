@@ -16,6 +16,10 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     const string gameOption = "gameSetup";
     // Start is called before the first frame update
 
+    /*public string json_gamerules;
+    public JSON_Format object_gamerules;
+    public GameRules gamerules = new GameRules();*/
+
     PhotonView PV;
 
     GameObject controller;
@@ -23,6 +27,8 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     void Awake()
     {
         PV = GetComponent<PhotonView>();
+        //json_gamerules = gamerules.gamerules_read();
+        //object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
     }
 
     void Start()
@@ -33,20 +39,20 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     void CreateController()
     {
 
-        Debug.Log("Test");
+        //Debug.Log("Test");
 
         Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ));
 
         if (PlayerPrefs.GetInt(gameOption, 0) == 0)
         {
-           controller = PhotonNetwork.Instantiate(VRPrefab.name, randomPosition, Quaternion.identity);
-            Debug.Log("VR généré");
+           controller = PhotonNetwork.Instantiate(VRPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
+            //Debug.Log("VR généré");
         }
         else if (PlayerPrefs.GetInt(gameOption, 0) == 1)
         {
             controller = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
 
-            Debug.Log("3RD bejbe");
+            //Debug.Log("3RD bejbe");
         }
     }
 

@@ -4950,7 +4950,6 @@ MonoBehaviour:
   remotePlayerMask:
     serializedVersion: 2
     m_Bits: 1472
-  shootPoint: {fileID: 0}
 --- !u!114 &2447387681567301623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5196,6 +5195,8 @@ MonoBehaviour:
   playerController: {fileID: 2153807175445112408}
   currentHealth: 10
   muzzleflash: {fileID: 8358595552373229350}
+  json_gamerules: 
+  master_Health: 0
 --- !u!1 &5609616420992835735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5777,6 +5778,9 @@ MonoBehaviour:
   thirdCamera: {fileID: 5634966316536609407}
   damage: 1
   muzzleflash: {fileID: 8358595552373229350}
+  nextTimeToFire: 0
+  json_gamerules: 
+  master_shot_cd: 0
 --- !u!114 &5432169340763559262
 MonoBehaviour:
   m_ObjectHideFlags: 0
