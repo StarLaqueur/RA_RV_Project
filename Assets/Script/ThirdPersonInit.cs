@@ -16,6 +16,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
+
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;

@@ -7,11 +7,13 @@ using UnityEngine.InputSystem.XR;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 {
     PhotonView view;
-    
+    NetworkPlayerSpawn networkPlayerSpawn;
+
     public GameObject locomotionSys, body, impactEffect;
     
     public Camera cameraVR;
@@ -24,13 +26,20 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public InputActionProperty shootActionButton;
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
+
     private string vrPlayerMask = "VRPlayerMask";
+    public float currentHealth = 10;
+    public float maxHealth = 10;
+
     [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+        networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
 
         if (view.IsMine)
         {
@@ -62,6 +71,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         else
         {
             gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
+            Destroy(ui);
         }
  
     }
@@ -97,7 +107,19 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         {
             return;
         }
-        Debug.Log(damage + "shes");
+
+        currentHealth -= damage;
+        healthBarImage.fillAmount = currentHealth / maxHealth;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        networkPlayerSpawn.Die();
     }
 
     public void ShootVR(Vector3 hitPosition, Vector3 hitNormal)
