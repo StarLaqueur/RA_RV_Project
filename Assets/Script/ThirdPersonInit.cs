@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
@@ -9,11 +10,15 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
+
     private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
+    public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
     [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
 
 
     // Start is called before the first frame update
@@ -40,6 +45,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         {
             gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
             playerGFX.layer = LayerMask.NameToLayer(thirdPersonMask);
+            Destroy(ui);
         }
     }
 
@@ -58,7 +64,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
 
         currentHealth -= damage;
-        Debug.Log(currentHealth);
+        healthBarImage.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
