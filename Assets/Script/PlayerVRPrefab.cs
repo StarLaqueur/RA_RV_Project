@@ -30,7 +30,16 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
-    private string remoteLayerName = "RemotePlayer";
+    private string vrPlayerMask = "VRPlayerMask";
+    [SerializeField] private ParticleSystem muzzleFlash;
+
+    public float nextTimeToFire;
+    public float currentHealth;
+    public string json_gamerules;
+    public float master_shot_cd;
+    public float master_Health;
+    public JSON_Format object_gamerules;
+    public GameRules gamerules = new GameRules();
 
     public float currentHealth = 10;
     public float maxHealth = 10;
@@ -40,6 +49,19 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("enter master");
+            json_gamerules = gamerules.gamerules_read();
+            object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
+            master_Health = object_gamerules.HP;
+            view.RPC("RPC_ReadHealthVR", RpcTarget.OthersBuffered, master_Health);
+            master_shot_cd = object_gamerules.Shot_Cooldown;
+            view.RPC("RPC_ReadShotCd_VR", RpcTarget.OthersBuffered, master_shot_cd);
+            currentHealth = master_Health;
+            nextTimeToFire = master_shot_cd;
+        }
 
         if (view.IsMine)
         {
@@ -70,8 +92,8 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
-            gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
             Destroy(ui);
+            gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
         }
  
     }
@@ -90,7 +112,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(nextTimeToFire);
         authorizedToShoot = true;
     }
 
@@ -136,5 +158,29 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
         
         Destroy(impactGO, 2f);
+    }
+
+    public void ShootParticule()
+    {
+        view.RPC("RPC_ShootParticule", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_ShootParticule()
+    {
+        muzzleFlash.Play();
+        
+    [PunRPC]
+    void RPC_ReadHealthVR(float health)
+    {
+        currentHealth = health;
+        Debug.Log("masters" + currentHealth);
+    }
+    
+    [PunRPC]
+    void RPC_ReadShotCd_VR(float health)
+    {
+        currentHealth = health;
+        Debug.Log("masters" + currentHealth);
     }
 }

@@ -1414,6 +1414,7 @@ MonoBehaviour:
   vrGunScript: {fileID: 8725818804285765001}
   currentHealth: 10
   maxHealth: 10
+  muzzleFlash: {fileID: 32210795334820120}
 --- !u!136 &8726719892048280559
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7288,5 +7289,8 @@ MonoBehaviour:
   shooterXRController: {fileID: 6024181572451438898}
   raycastOrigin: {fileID: 7339190723247893644}
   impactEffect: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
+  remotePlayerMask:
+    serializedVersion: 2
+    m_Bits: 2496
   muzzleflash: {fileID: 32210795334820120}
   playerVRPrefab: {fileID: 2991447355110637643}

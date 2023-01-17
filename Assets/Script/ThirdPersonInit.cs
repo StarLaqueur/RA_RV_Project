@@ -13,12 +13,19 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
-    private string remoteLayerName = "RemotePlayer";
+    private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
     public float maxHealth = 10;
 
+    public ParticleSystem muzzleflash;
 
     NetworkPlayerSpawn networkPlayerSpawn;
+
+    public float currentHealth;
+    public string json_gamerules;
+    public float master_Health;
+    public JSON_Format object_gamerules;
+    public GameRules gamerules = new GameRules();
 
 
     // Start is called before the first frame update
@@ -27,6 +34,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
         
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("enter master");
+            json_gamerules = gamerules.gamerules_read();
+            object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
+            master_Health = object_gamerules.HP;
+            view.RPC("RPC_ReadHealth", RpcTarget.OthersBuffered, master_Health);
+            currentHealth = master_Health;
+        }
+        Debug.Log("current-health " + currentHealth);
 
         if (view.IsMine)
         {
@@ -44,8 +62,9 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             
         } else
         {
-            gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
             Destroy(ui);
+            gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
+            playerGFX.layer = LayerMask.NameToLayer(thirdPersonMask);
         }
     }
 
@@ -73,6 +92,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             Die();
         }
     }
+    
+    [PunRPC]
+    void RPC_ReadHealth(float health)
+    {
+        currentHealth = health;
+        Debug.Log("masters"+currentHealth);
+    }
 
     private void Die()
     {
@@ -90,6 +116,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
         Destroy(impactGO, 2f);
+    }
+
+    public void ShootParticule()
+    {
+        view.RPC("RPC_ShootParticule", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_ShootParticule()
+    {
+        muzzleflash.Play();
     }
 
 
