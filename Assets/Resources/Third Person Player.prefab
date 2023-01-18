@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 70755463919377993}
   - component: {fileID: 6202752344603586597}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TeleportIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5994,7 +5994,7 @@ GameObject:
   - component: {fileID: 5090018520667003985}
   - component: {fileID: 4802589916413466007}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BanersSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
