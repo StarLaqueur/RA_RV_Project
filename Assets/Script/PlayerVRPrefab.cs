@@ -27,7 +27,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
 
-    private string vrPlayerMask = "VRPlayerMask";
+    private string vrPlayerMask = "vrPlayerMask";
     public float currentHealth = 10;
     public float maxHealth = 10;
 
