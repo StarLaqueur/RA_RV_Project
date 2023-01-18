@@ -8,13 +8,9 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     public GameObject playerPrefab;
     public GameObject VRPrefab;
-    public float minX;
-    public float maxX;
-    public float minZ;
-    public float maxZ;
 
     const string gameOption = "gameSetup";
-    // Start is called before the first frame update
+    public GameManagement game;
 
     PhotonView PV;
 
@@ -30,29 +26,22 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         CreateController();
     }
 
-    void CreateController()
+    public void CreateController()
     {
-
-        Debug.Log("Test");
-
-        Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ));
+		game.SetPinPoint();
 
         if (PlayerPrefs.GetInt(gameOption, 0) == 0)
         {
-           controller = PhotonNetwork.Instantiate(VRPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
-            Debug.Log("VR généré");
+           controller = PhotonNetwork.Instantiate(VRPrefab.name, game.SetSpawnPoint(), Quaternion.identity, 0, new object[] { PV.ViewID });
         }
         else if (PlayerPrefs.GetInt(gameOption, 0) == 1)
         {
-            controller = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity, 0, new object[] { PV.ViewID });
-
-            Debug.Log("3RD bejbe");
+            controller = PhotonNetwork.Instantiate(playerPrefab.name, game.SetSpawnPoint(), Quaternion.identity, 0, new object[] { PV.ViewID });
         }
     }
 
     public void Die()
     {
-        PhotonNetwork.Destroy(controller);
-        CreateController();
+        game.Respawn(controller);
     }
 }
