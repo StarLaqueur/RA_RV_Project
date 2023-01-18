@@ -44,7 +44,7 @@ public class Guns : MonoBehaviour
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(thirdPersonScript.master_shot_cd);
         authorizedToShoot = true;
     }
 }

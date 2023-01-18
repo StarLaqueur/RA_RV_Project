@@ -5270,11 +5270,19 @@ MonoBehaviour:
   controller3RD: {fileID: 2153807175445112423}
   gunScript: {fileID: 3598831117685043087}
   playerController: {fileID: 2153807175445112408}
-  currentHealth: 10
-  maxHealth: 10
   muzzleFlash: {fileID: 8358595552373229350}
   healthBarImage: {fileID: 3103485749893880908}
   ui: {fileID: 5867652944435986095}
+  particle_effects_scientist: []
+  beam_light_scientist: {fileID: 0}
+  currentHealth: 10
+  maxHealth: 10
+  json_gamerules: 
+  master_Health: 0
+  nextTimeToFire: 0
+  master_shot_cd: 0
+  master_scientist_color: 0
+  scientist_color: 0
 --- !u!1 &5609616420992835735
 GameObject:
   m_ObjectHideFlags: 0

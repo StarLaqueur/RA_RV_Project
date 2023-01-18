@@ -42,6 +42,9 @@ MonoBehaviour:
   - RPC_TakeDamage
   - RPC_Shoot
   - RPC_ShootParticule
+  - RPC_ReadColorScientist
+  - RPC_ReadHealth
+  - RPC_ReadShotCD
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
