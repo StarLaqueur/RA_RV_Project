@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
@@ -9,10 +10,16 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
-    private string remoteLayerName = "RemotePlayer";
+
+    private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
+    public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
+
+    [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] GameObject ui;
 
 
     // Start is called before the first frame update
@@ -37,7 +44,9 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             
         } else
         {
-            gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
+            gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
+            playerGFX.layer = LayerMask.NameToLayer(thirdPersonMask);
+            Destroy(ui);
         }
     }
 
@@ -56,7 +65,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
 
         currentHealth -= damage;
-        Debug.Log(currentHealth);
+        healthBarImage.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
@@ -79,6 +88,16 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         GameObject impactGO = Instantiate(impactEffect, hitPosition, Quaternion.LookRotation(hitNormal));
         Destroy(impactGO, 2f);
+    }
+    public void ShootParticule()
+    {
+        view.RPC("RPC_ShootParticule", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_ShootParticule()
+    {
+        muzzleFlash.Play();
     }
 
 
