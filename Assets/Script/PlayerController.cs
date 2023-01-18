@@ -28,13 +28,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public LayerMask groundMask;
 
     [SerializeField] private LayerMask remotePlayerMask;
-
+    private Animator anim;
 
     private void Start()
     {
 
         controller = GetComponent<CharacterController>();
         cam = Camera.main.transform;
+        anim = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -44,32 +45,43 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void Update()
     {
   
-            isGrounded = controller.isGrounded;
+        isGrounded = controller.isGrounded;
 
-            if (isGrounded && playerVelocity.y < 0)
-            {
-                playerVelocity.y = -2f;
-            }
+        if (isGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = -2f;
+        }
 
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
                 
-                Jump();
-            }
+            Jump();
+        }
 
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            move = move.x * cam.right.normalized + move.z * cam.forward.normalized;
-            move.y = 0f;
-            controller.Move(move * Time.deltaTime * playerSpeed);
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+        if (move == Vector3.zero)
+        {
+            Idle();
+        }
+        else if (move != Vector3.zero)
+        {
+            Run();
+        }
+
+        move = move.x * cam.right.normalized + move.z * cam.forward.normalized;
+        move.y = 0f;
+        controller.Move(move * Time.deltaTime * playerSpeed);
 
 
-            playerVelocity.y += gravityValue * 2 * Time.deltaTime;
-            controller.Move(playerVelocity * Time.deltaTime);
+        playerVelocity.y += gravityValue * 2 * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
-            Quaternion targetRotation = Quaternion.Euler(0, cam.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Euler(0, cam.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        
+
+
     }
 
     private void Jump()
@@ -80,6 +92,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void TakeDamage(float damage)
     {
         thirdPersonScript.TakeDamageGo(damage);
+    }
+
+    private void Idle()
+    {
+        anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+    }
+
+    private void Run()
+    {
+        anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
     }
 
 

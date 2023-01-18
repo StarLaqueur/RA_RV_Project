@@ -16,6 +16,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
+    private Animator anim;
 
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
@@ -26,6 +27,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     void Start()
     {
         view = GetComponent<PhotonView>();
+        anim = GetComponentInChildren<Animator>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
 
         if (view.IsMine)
