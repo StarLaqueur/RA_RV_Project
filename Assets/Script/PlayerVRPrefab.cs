@@ -24,6 +24,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public XRInteractorLineVisual xrayInteractorLeft, xrayInteractorRight;
     public CharacterController playerVrCharacterController;
     public InputActionProperty shootActionButton;
+    public InputActionProperty teleportationButton;
     public VRGuns vrGunScript;
     private bool authorizedToShoot = true;
 
@@ -31,7 +32,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public float currentHealth = 10;
     public float maxHealth = 10;
 
-    [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleFlash, teleportationParticules;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
 
@@ -85,6 +86,13 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             
             StartCoroutine(WaitReload());
         }
+        if (teleportationButton.action.ReadValue<float>() > 0.1f)
+        {
+            view.RPC("RPC_TeleportationParticule", RpcTarget.All);
+
+        }
+
+
     }
     
     IEnumerator WaitReload()
@@ -144,4 +152,12 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         muzzleFlash.Play();
     }
+
+    [PunRPC]
+    void RPC_TeleportationParticule()
+    {
+        teleportationParticules.Play();
+    }
+
+
 }
