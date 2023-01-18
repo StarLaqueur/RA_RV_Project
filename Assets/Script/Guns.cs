@@ -37,14 +37,16 @@ public class Guns : MonoBehaviour
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit, Mathf.Infinity, remotePlayerMask))
         {
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
     }
     IEnumerator WaitReload()
     {
+        //Debug.Log(thirdPersonScript.master_shot_cd);
+        Debug.Log("cooldown "+thirdPersonScript.nextTimeToFire);
         authorizedToShoot = false;
-        yield return new WaitForSeconds(thirdPersonScript.master_shot_cd);
+        yield return new WaitForSeconds(thirdPersonScript.nextTimeToFire);
         authorizedToShoot = true;
     }
 }

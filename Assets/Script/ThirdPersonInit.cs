@@ -51,7 +51,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             maxHealth = master_Health;
             nextTimeToFire = master_shot_cd;
             scientist_color = master_scientist_color;
-
+            Debug.Log("test start");
             ReadHealth(master_Health);
             ReadShotCD(master_shot_cd);
             ReadColorScientist(master_scientist_color);
@@ -136,7 +136,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public void ReadHealth(float health)
     {
-        //Debug.Log("test cooldown");
         view.RPC("RPC_ReadHealth", RpcTarget.OthersBuffered, health);
     }
 
@@ -149,25 +148,26 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public void ReadShotCD(float time_fire)
     {
-        //Debug.Log("test cooldown");
+        Debug.Log("test cooldown");
         view.RPC("RPC_ReadShotCD", RpcTarget.OthersBuffered, time_fire);
+        return;
     }
     [PunRPC]
     void RPC_ReadShotCD(float time_fire)
     {
         nextTimeToFire = time_fire;
-        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
+        Debug.Log("masters cooldown RPC" + nextTimeToFire);
     }
     public void ReadColorScientist(float color)
     {
-        Debug.Log("test color");
-        view.RPC("RPC_ReadShotCD", RpcTarget.OthersBuffered, color);
+        //Debug.Log("test color");
+        view.RPC("RPC_ReadColorsScientist", RpcTarget.OthersBuffered, color);
     }
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
         scientist_color = color;
-        Debug.Log("masters cooldown RPC" + scientist_color);
+        //Debug.Log("masters cooldown RPC" + scientist_color);
     }
 
     public void Scientist_Color_shots(float scientist)
