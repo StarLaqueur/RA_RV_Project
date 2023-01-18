@@ -6,7 +6,7 @@ public class Guns : MonoBehaviour
 {
     public GameObject impactEffect;
     public ThirdPersonInit thirdPersonScript;
-    public AudioSource shotSound;
+
 
 
     [SerializeField] private LayerMask remotePlayerMask;
@@ -34,7 +34,6 @@ public class Guns : MonoBehaviour
     private void Shoot()
     {
         thirdPersonScript.ShootParticule();
-        shotSound.Play();
         RaycastHit hit;
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit, Mathf.Infinity, remotePlayerMask))
         {

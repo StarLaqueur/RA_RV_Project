@@ -10,6 +10,8 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
+    public AudioSource shotSound;
+    public AudioSource isHitSound;
 
     private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
@@ -20,6 +22,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
+
 
 
     // Start is called before the first frame update
@@ -64,6 +67,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             return;
         }
 
+        isHitSound.Play();
         currentHealth -= damage;
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
@@ -97,7 +101,9 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_ShootParticule()
     {
+        shotSound.Play();
         muzzleFlash.Play();
+        
     }
 
 
