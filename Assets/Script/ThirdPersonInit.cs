@@ -43,7 +43,9 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public float scientist_color;
     public float master_virus_color;
     public float virus_color;
-    public bool master_is_third_person = false;
+    public float number_kills;
+    public float master_number_kills;
+
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
 
@@ -65,12 +67,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             master_Health = object_gamerules.HP;
             master_shot_cd = object_gamerules.Shot_Cooldown;
             master_scientist_color = object_gamerules.Scientist_Color;
-            
+            master_number_kills = object_gamerules.Shot_Cooldown;
 
             currentHealth = master_Health;
             maxHealth = master_Health;
             nextTimeToFire = master_shot_cd;
             scientist_color = master_scientist_color;
+            number_kills = master_number_kills;
 
             master_virus_color = object_gamerules.Virus_Color;
             virus_color = master_virus_color;
@@ -78,15 +81,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             ReadHealth(master_Health);
             ReadShotCD(master_shot_cd);
 
-            //ReadColorVirus(virus_color);
-            //Virus_Color_shots(master_virus_color);
-
             ReadColorScientist(master_scientist_color);
             Scientist_Color_shots();
 
         }
-
-
 
         if (view.IsMine)
         {
@@ -203,19 +201,18 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         //Debug.Log("masters colors RPC" + scientist_color);
     }
 
-    /*public void ReadColorVirus(float color)
+    public void ReadNumberKills(float number_kills)
     {
         //Debug.Log("test color : "+color);
-        view.RPC("RPC_ReadColorVirus", RpcTarget.OthersBuffered, color);
-    }*/
+        view.RPC("RPC_NumberKills", RpcTarget.OthersBuffered, number_kills);
+    }
     [PunRPC]
-    /*void RPC_ReadColorVirus(float color)
+    void RPC_ReadNumberKills(float color)
     {
-        Virus_Color_shots(color);
-        virus_color = color;
+        scientist_color = color;
+        Scientist_Color_shots();
         //Debug.Log("masters colors RPC" + scientist_color);
-
-    }*/
+    }
 
     public void Scientist_Color_shots()
     {

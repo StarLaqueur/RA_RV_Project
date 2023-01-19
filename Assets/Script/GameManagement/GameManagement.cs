@@ -34,6 +34,9 @@ public class GameManagement : MonoBehaviour
     public TextMeshProUGUI VRTeamText;
     public TextMeshProUGUI TPPTeamText;
 
+    public ThirdPersonInit thirdPersonScript;
+    public PlayerVRPrefab playerVRPrefab;
+
     private void Awake()
     {
         SetScoreText();
@@ -50,12 +53,12 @@ public class GameManagement : MonoBehaviour
     {
         SetScoreText();
 
-        if(VRTeam >= 10)
+        if(VRTeam >= playerVRPrefab.number_kills & VRTeam >= thirdPersonScript.number_kills )
         {
             EndGame("VRTEAM");
         }
 
-        if(TPPTeam >= 10)
+        if(TPPTeam >= playerVRPrefab.number_kills & TPPTeam >= thirdPersonScript.number_kills)
         {
             EndGame("KMSTEAM");
         }
