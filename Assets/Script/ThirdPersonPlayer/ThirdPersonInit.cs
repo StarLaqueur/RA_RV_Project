@@ -129,8 +129,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
         if (currentHealth <= 0)
         {
-            Die();
-            Debug.Log("Death");        
+            Die();     
         }
     }
 
@@ -142,15 +141,16 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public void ShootThirdPerson(Vector3 hitPosition, Vector3 hitNormal)
     {
-        view.RPC("RPC_Shoot", RpcTarget.All, hitPosition, hitNormal);
+        view.RPC("RPC_ShootThird", RpcTarget.All, hitPosition, hitNormal);
     }
 
     [PunRPC]
-    void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
+    void RPC_ShootThird(Vector3 hitPosition, Vector3 hitNormal)
     {
         GameObject impactGO = Instantiate(impactEffectScientist, hitPosition, Quaternion.LookRotation(hitNormal));
         Destroy(impactGO, 2f);
     }
+
     public void ShootParticule()
     {
         view.RPC("RPC_ShootParticule", RpcTarget.All);
@@ -161,9 +161,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         shotSound.Play();
         muzzleFlash.Play();
-        
     }
-
 
     public void ReadHealth(float health)
     {
@@ -175,26 +173,25 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         currentHealth = health;
         maxHealth = health;
-        //Debug.Log("masters"+currentHealth);
     }
 
     public void ReadShotCD(float time_fire)
     {
-        //Debug.Log("test cooldown");
         view.RPC("RPC_ReadShotCD", RpcTarget.OthersBuffered, time_fire);
         return;
     }
+
     [PunRPC]
     void RPC_ReadShotCD(float time_fire)
     {
         nextTimeToFire = time_fire;
-        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
     }
+
     public void ReadColorScientist(float color)
     {
-        //Debug.Log("test color : "+color);
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
+
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
@@ -219,7 +216,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public void Scientist_Color_shots()
     {
-        //Debug.Log("bonjour je suis un test");
         particle_effects_scientist = impactEffectScientist.GetComponentsInChildren<ParticleSystem>();
         beam_light_scientist = impactEffectScientist.GetComponentInChildren<Light>();
         var main0 = particle_effects_scientist[0].main;

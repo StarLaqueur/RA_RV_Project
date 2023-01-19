@@ -22,12 +22,12 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public XRRayInteractor xrayLeft, xrayRight;
     public XRInteractorLineVisual xrayInteractorLeft, xrayInteractorRight;
     public CharacterController playerVrCharacterController;
-    public InputActionProperty shootActionButton;
+    
     public VRGuns vrGunScript;
     public AudioSource shotSound;
     public AudioSource isHit;
     public AudioSource respawnSound;
-    private bool authorizedToShoot = true;
+   
 
     private string vrPlayerMask = "vrPlayerMask";
 
@@ -48,8 +48,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public bool master_is_third_person = false;
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
-
-    public ThirdPersonInit thirdPersonInit;
 
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
@@ -96,7 +94,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
         if (PhotonNetwork.IsMasterClient)
         {
-            //Debug.Log("enter master");
             json_gamerules = gamerules.gamerules_read();
             object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
             master_Health = object_gamerules.HP;
@@ -120,24 +117,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
 
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (shootActionButton.action.ReadValue<float>() > 0.1f && authorizedToShoot)
-        {
-            vrGunScript.Shoot();
-            
-            StartCoroutine(WaitReload());
-        }
-    }
     
-    IEnumerator WaitReload()
-    {
-        authorizedToShoot = false;
-        yield return new WaitForSeconds(nextTimeToFire);
-        authorizedToShoot = true;
-    }
 
     public void TakeDamage(float damage)
     {
@@ -171,16 +151,17 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void ShootVR(Vector3 hitPosition, Vector3 hitNormal)
     {
-        view.RPC("RPC_Shoot", RpcTarget.All, hitPosition, hitNormal);
+        view.RPC("RPC_ShootVR", RpcTarget.All, hitPosition, hitNormal);
     }
 
     [PunRPC]
-    void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
+    void RPC_ShootVR(Vector3 hitPosition, Vector3 hitNormal)
     {
         GameObject impactGO = Instantiate(impactEffectVirus, hitPosition, Quaternion.LookRotation(hitNormal));
         
         Destroy(impactGO, 2f);
     }
+
     public void ShootParticule()
     {
         view.RPC("RPC_ShootParticule", RpcTarget.All);
@@ -204,27 +185,28 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         currentHealth = health;
         maxHealth = health;
-        //Debug.Log("masters"+currentHealth);
     }
 
     public void ReadShotCD_VR(float time_fire)
     {
-        //Debug.Log("test cooldown");
         view.RPC("RPC_ReadShotCD_VR", RpcTarget.OthersBuffered, time_fire);
         return;
     }
+
     [PunRPC]
     void RPC_ReadShotCD_VR(float time_fire)
     {
         nextTimeToFire = time_fire;
-        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
     }
+
     public void ReadColorVirus(float color)
     {
         Debug.Log("test color_virus : "+color);
         view.RPC("RPC_ReadColorVirus", RpcTarget.OthersBuffered, color);
     }
+
     [PunRPC]
+
     void RPC_ReadColorVirus(float color)
     {
         Virus_Color_shots(color);
@@ -235,15 +217,14 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void ReadColorScientist(float color)
     {
-        //Debug.Log("test color : "+color);
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
+
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
         scientist_color = color;
         Scientist_Color_shots();
-        //Debug.Log("masters colors RPC" + scientist_color);
     }
 
     public void Virus_Color_shots(float color)
@@ -271,7 +252,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void Scientist_Color_shots()
     {
-        //Debug.Log("bonjour je suis un test");
         particle_effects_scientist = impactEffectScientist.GetComponentsInChildren<ParticleSystem>();
         beam_light_scientist = impactEffectScientist.GetComponentInChildren<Light>();
         var main0 = particle_effects_scientist[0].main;

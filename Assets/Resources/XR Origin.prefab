@@ -2020,18 +2020,6 @@ MonoBehaviour:
   xrayInteractorLeft: {fileID: 6024181572529163293}
   xrayInteractorRight: {fileID: 6024181572451438863}
   playerVrCharacterController: {fileID: 6024181573307560878}
-  shootActionButton:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Shoot Action Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: f36b7ca3-9aa1-47d0-b788-4148c04ca557
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   vrGunScript: {fileID: 8725818804285765001}
   shotSound: {fileID: 7231031874068409218}
   isHit: {fileID: 208128463976860266}
@@ -2051,7 +2039,6 @@ MonoBehaviour:
   master_scientist_color: 0
   scientist_color: 0
   master_is_third_person: 0
-  thirdPersonInit: {fileID: 0}
   muzzleFlash: {fileID: 32210795334820120}
   healthBarImage: {fileID: 3492760031900310821}
   ui: {fileID: 6205661769522338857}
@@ -8080,3 +8067,15 @@ MonoBehaviour:
     m_Bits: 1472
   raycastOrigin: {fileID: 7339190723247893644}
   playerVRPrefab: {fileID: 2991447355110637643}
+  shootActionButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Shoot Action Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 4eaf225c-06ee-40be-8348-0681e94e2ee8
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
