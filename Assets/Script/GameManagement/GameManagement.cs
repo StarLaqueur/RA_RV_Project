@@ -19,6 +19,9 @@ public class GameManagement : MonoBehaviour
     public GameObject Panel;
     public NetworkPlayerSpawn npt;
 
+    public AudioSource respawnSound;
+    public AudioSource deathSound;
+
     public TextMeshProUGUI textMesh;
 
     public GameObject LoadStoredPin;
@@ -77,7 +80,8 @@ public class GameManagement : MonoBehaviour
 
     IEnumerator GameRespawn()
     {
-        yield return new WaitForSeconds(1);
+        Debug.Log("deth");
+        deathSound.Play();
         textMesh.text = "Vous allez reapparaitre dans 5 secondes...";
         yield return new WaitForSeconds(1);
         textMesh.text = "Vous allez reapparaitre dans 4 secondes...";

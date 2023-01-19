@@ -10,8 +10,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public CharacterController controller3RD;
     public Guns gunScript;
     public PlayerController playerController;
+
     public AudioSource shotSound;
     public AudioSource isHitSound;
+    public AudioSource respawnSound;
 
     private string thirdPersonMask = "ThirdPersonMask";
     public float currentHealth = 10;
@@ -33,6 +35,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
         if (view.IsMine)
         {
+            respawnSound.Play();
             prefabThird.SetActive(true);
             localCam.SetActive(true);
             cinemachineCam.SetActive(true);
@@ -74,6 +77,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         if (currentHealth <= 0)
         {
             Die();
+            Debug.Log("Death");        
         }
     }
 
