@@ -2033,13 +2033,13 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   vrGunScript: {fileID: 8725818804285765001}
+  shotSound: {fileID: 7231031874068409218}
+  isHit: {fileID: 208128463976860266}
+  respawnSound: {fileID: 4159086105315173799}
   particle_effects_virus: []
   beam_light_virus: {fileID: 0}
   particle_effects_scientist: []
   beam_light_scientist: {fileID: 0}
-  shotSound: {fileID: 7231031874068409218}
-  isHit: {fileID: 208128463976860266}
-  respawnSound: {fileID: 4159086105315173799}
   currentHealth: 10
   maxHealth: 10
   json_gamerules: 

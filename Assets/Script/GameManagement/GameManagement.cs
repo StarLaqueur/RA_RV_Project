@@ -50,7 +50,7 @@ public class GameManagement : MonoBehaviour
     {
         SetScoreText();
 
-        if(VRTeam >= 2)
+        if(VRTeam >= 10)
         {
             EndGame("VRTEAM");
         }
