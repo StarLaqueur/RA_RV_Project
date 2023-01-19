@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class FinalScene : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textMesh;
+    [SerializeField] TextMeshProUGUI textWinner;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GameEnd());
+        textWinner.text = "WINNER " + PlayerPrefs.GetString("winner");
     }
 
     IEnumerator GameEnd()
