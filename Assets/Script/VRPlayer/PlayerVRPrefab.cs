@@ -22,7 +22,8 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public XRRayInteractor xrayLeft, xrayRight;
     public XRInteractorLineVisual xrayInteractorLeft, xrayInteractorRight;
     public CharacterController playerVrCharacterController;
-    
+    public InputActionProperty teleportationButton;
+
     public VRGuns vrGunScript;
     public AudioSource shotSound;
     public AudioSource isHit;
@@ -49,7 +50,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
 
-    [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleFlash, teleportationParticules;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
 
@@ -117,7 +118,21 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
 
     }
-    
+
+    void FixedUpdate()
+    {
+        if (teleportationButton.action.ReadValue<float>() > 0.1f)
+        {
+            view.RPC("RPC_TeleportationParticule", RpcTarget.All);
+
+        }
+    }
+
+    [PunRPC]
+    void RPC_TeleportationParticule()
+    {
+        teleportationParticules.Play();
+    }
 
     public void TakeDamage(float damage)
     {

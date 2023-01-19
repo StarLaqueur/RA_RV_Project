@@ -24,6 +24,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     NetworkPlayerSpawn networkPlayerSpawn;
 
+
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
