@@ -14,7 +14,28 @@ public class PrintValueVirusColor : MonoBehaviour
 
     public void textUpdate(float value)
     {
-        string slider_value = value.ToString();
+        string slider_value;
+        if (value == 1)
+        {
+            slider_value = "Rouge";
+            TextValue.color = Color.red;
+        }
+        else if (value == 2)
+        {
+            slider_value = "Jaune";
+            TextValue.color = Color.yellow;
+        }
+        else if (value == 3)
+        {
+            slider_value = "Cyan";
+            TextValue.color = Color.cyan;
+        }
+        else
+        {
+            slider_value = "Rouge";
+            TextValue.color = Color.red;
+        }
         TextValue.text = slider_value;
     }
 }
+
