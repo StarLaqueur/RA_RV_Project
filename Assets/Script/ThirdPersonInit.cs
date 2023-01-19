@@ -1,7 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System;
+using Photon.Realtime;
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
@@ -32,7 +34,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
-
+       
         if (view.IsMine)
         {
             respawnSound.Play();
@@ -46,8 +48,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             controller3RD.enabled = true;
             gunScript.enabled = true;
             playerController.enabled = true;
-
-            
         } else
         {
             gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
@@ -83,6 +83,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     private void Die()
     {
+        PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
@@ -110,7 +111,14 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         
     }
 
+    public void PlayerKilled()
+    {
+        view.RPC("RPC_PlayerKilled", RpcTarget.All);
+    }
 
-
-
+    [PunRPC]
+    void RPC_PlayerKilled()
+    {
+        GameManagement.VRTeam++;
+    }
 }
