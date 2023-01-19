@@ -24,12 +24,13 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     void Start()
     {
         CreateController();
+
     }
 
     public void CreateController()
     {
 		game.SetPinPoint();
-
+        Debug.Log("test Respawn");
         if (PlayerPrefs.GetInt(gameOption, 0) == 0)
         {
            controller = PhotonNetwork.Instantiate(VRPrefab.name, game.SetSpawnPoint(), Quaternion.identity, 0, new object[] { PV.ViewID });

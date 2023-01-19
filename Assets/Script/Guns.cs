@@ -6,7 +6,7 @@ public class Guns : MonoBehaviour
 {
     public GameObject impactEffect;
     public ThirdPersonInit thirdPersonScript;
-
+    public NetworkPlayerSpawn PlayerSpawn;
 
 
     [SerializeField] private LayerMask remotePlayerMask;
@@ -38,14 +38,16 @@ public class Guns : MonoBehaviour
         if (Physics.Raycast(thirdCamera.transform.position, thirdCamera.transform.forward, out hit, Mathf.Infinity, remotePlayerMask))
         {
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
     }
     IEnumerator WaitReload()
     {
+        //Debug.Log(thirdPersonScript.master_shot_cd);
+        //Debug.Log("cooldown "+ PlayerSpawn.nextTimeToFire);
         authorizedToShoot = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(thirdPersonScript.nextTimeToFire);
         authorizedToShoot = true;
     }
 }
