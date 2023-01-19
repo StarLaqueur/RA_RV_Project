@@ -25,6 +25,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public CharacterController playerVrCharacterController;
     public InputActionProperty shootActionButton;
     public VRGuns vrGunScript;
+    public AudioSource shotSound;
+    public AudioSource isHit;
+    public AudioSource respawnSound;
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
@@ -64,6 +67,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
         if (view.IsMine)
         {
+            respawnSound.Play();
             body.SetActive(false);
             GetComponent<XROrigin>().enabled = true;
             GetComponentInChildren<CharacterControllerDriver>().enabled = true;
@@ -154,6 +158,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             return;
         }
 
+        isHit.Play();
         currentHealth -= damage;
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
@@ -165,6 +170,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     private void Die()
     {
+        PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
@@ -188,8 +194,10 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_ShootParticule()
     {
+        shotSound.Play();
         muzzleFlash.Play();
     }
+
 
     public void ReadHealth_VR(float health)
     {
@@ -246,7 +254,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public void Virus_Color_shots(float color)
     {
         virus_color = color;
-        Debug.Log("je suis un test pour la coloration du virus pour le scientifique par le virus à la couleur "+virus_color);
+        Debug.Log("je suis un test pour la coloration du virus pour le scientifique par le virus ï¿½ la couleur "+virus_color);
         particle_effects_virus = impactEffectVirus.GetComponentsInChildren<ParticleSystem>();
         beam_light_virus = impactEffectVirus.GetComponentInChildren<Light>();
         var main0 = particle_effects_virus[0].main;
@@ -286,5 +294,17 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         col1.color = grad;
         col2.color = grad;
         col3.color = grad;
+    }
+    
+    public void PlayerKilled()
+    {
+        view.RPC("RPC_PlayerKilled", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_PlayerKilled()
+    {
+        GameManagement.TPPTeam++;
+
     }
 }

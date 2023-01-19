@@ -50,6 +50,8 @@ MonoBehaviour:
   - RPC_ReadHealth_VR
   - RPC_ReadShotCD_VR
   - Scientist_Color_shots
+  - RPC_GetKill
+  - RPC_PlayerKilled
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

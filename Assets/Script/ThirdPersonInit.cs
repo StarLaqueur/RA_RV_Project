@@ -1,7 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System;
+using Photon.Realtime;
 
 public class ThirdPersonInit : MonoBehaviourPunCallbacks
 {
@@ -12,6 +14,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public PlayerController playerController;
     
 
+    public AudioSource shotSound;
+    public AudioSource isHitSound;
+    public AudioSource respawnSound;
+
     private string thirdPersonMask = "ThirdPersonMask";
     //public float currentHealth = 10;
     //public float maxHealth = 10;
@@ -21,6 +27,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
+
 
     public ParticleSystem[] particle_effects_virus;
     public Light beam_light_virus;
@@ -42,11 +49,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public PlayerVRPrefab playerVR;
  
+
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
+
         
         if (PhotonNetwork.IsMasterClient)
         {
@@ -81,6 +90,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
         if (view.IsMine)
         {
+            respawnSound.Play();
             prefabThird.SetActive(true);
             localCam.SetActive(true);
             cinemachineCam.SetActive(true);
@@ -91,8 +101,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             controller3RD.enabled = true;
             gunScript.enabled = true;
             playerController.enabled = true;
-
-            
         } else
         {
             gameObject.layer = LayerMask.NameToLayer(thirdPersonMask);
@@ -115,17 +123,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             return;
         }
 
+        isHitSound.Play();
         currentHealth -= damage;
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
             Die();
+            Debug.Log("Death");        
         }
     }
 
     private void Die()
     {
+        PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
@@ -148,8 +159,11 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_ShootParticule()
     {
+        shotSound.Play();
         muzzleFlash.Play();
+        
     }
+
 
     public void ReadHealth(float health)
     {
@@ -246,6 +260,18 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         col1.color = grad;
         col2.color = grad;
         col3.color = grad;
+    }
+
+
+    public void PlayerKilled()
+    {
+        view.RPC("RPC_PlayerKilled", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_PlayerKilled()
+    {
+        GameManagement.VRTeam++;
     }
 
 }

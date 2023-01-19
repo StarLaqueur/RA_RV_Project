@@ -8,6 +8,7 @@ public class Guns : MonoBehaviour
     public ThirdPersonInit thirdPersonScript;
     public NetworkPlayerSpawn PlayerSpawn;
 
+
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Camera thirdCamera;
     [SerializeField] int damage;
