@@ -15,7 +15,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     NetworkPlayerSpawn networkPlayerSpawn;
 
     public GameObject locomotionSys, body, impactEffectScientist, impactEffectVirus, gunVR;
-    
     public Camera cameraVR;
     public ActionBasedController xrControllerLeft, xrControllerRight;
     public TrackedPoseDriver tracketDriver;
@@ -31,7 +30,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
-
 
     public ParticleSystem[] particle_effects_virus;
     public Light beam_light_virus;

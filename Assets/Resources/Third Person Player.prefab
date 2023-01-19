@@ -6644,7 +6644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 134812, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 449102, guid: 3c81b162a1af44348b8994f7040514d4, type: 3}
       propertyPath: m_RootOrder
@@ -6818,7 +6818,6 @@ MonoBehaviour:
     m_Bits: 2496
   thirdCamera: {fileID: 5634966316536609407}
   damage: 1
-  muzzleflash: {fileID: 8358595552373229350}
 --- !u!114 &5432169340763559262
 MonoBehaviour:
   m_ObjectHideFlags: 0
