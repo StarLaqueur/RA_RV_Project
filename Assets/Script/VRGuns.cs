@@ -10,8 +10,6 @@ public class VRGuns : MonoBehaviour
     [SerializeField] XRBaseController shooterXRController;
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Transform raycastOrigin;
-    public GameObject impactEffect;
-    public ParticleSystem muzzleflash;
     public PlayerVRPrefab playerVRPrefab;
 
     // Start is called before the first frame update

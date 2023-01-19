@@ -14,7 +14,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     PhotonView view;
     NetworkPlayerSpawn networkPlayerSpawn;
 
-    public GameObject locomotionSys, body, impactEffectScientist, impactEffectVirus;
+    public GameObject locomotionSys, body, impactEffectScientist, impactEffectVirus, gunVR;
     
     public Camera cameraVR;
     public ActionBasedController xrControllerLeft, xrControllerRight;
@@ -31,8 +31,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
-    //public float currentHealth = 10;
-    //public float maxHealth = 10;
 
 
     public ParticleSystem[] particle_effects_virus;
@@ -69,12 +67,12 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         {
             respawnSound.Play();
             body.SetActive(false);
+            gunVR.SetActive(true);
             GetComponent<XROrigin>().enabled = true;
             GetComponentInChildren<CharacterControllerDriver>().enabled = true;
             playerVrCharacterController.enabled = true;
             locomotionSys.SetActive(true);
-           
-
+          
             cameraVR.enabled = true;
             tracketDriver.enabled = true;
             audioCamera.enabled = true;
