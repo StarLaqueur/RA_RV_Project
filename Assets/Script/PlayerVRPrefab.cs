@@ -28,8 +28,23 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
-    public float currentHealth = 10;
-    public float maxHealth = 10;
+    //public float currentHealth = 10;
+    //public float maxHealth = 10;
+
+
+    public ParticleSystem[] particle_effects_scientist;
+    public Light beam_light_scientist;
+    public float currentHealth;
+    public float maxHealth;
+    public string json_gamerules;
+    public float master_Health;
+    public float nextTimeToFire;
+    public float master_shot_cd;
+    public float master_virus_color;
+    public float virus_color;
+    public bool master_is_third_person = false;
+    public JSON_Format object_gamerules;
+    public GameRules gamerules = new GameRules();
 
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
@@ -73,7 +88,26 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
             Destroy(ui);
         }
- 
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            //Debug.Log("enter master");
+            json_gamerules = gamerules.gamerules_read();
+            object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
+            master_Health = object_gamerules.HP;
+            master_shot_cd = object_gamerules.Shot_Cooldown;
+            master_virus_color = object_gamerules.Scientist_Color;
+            currentHealth = master_Health;
+            maxHealth = master_Health;
+            nextTimeToFire = master_shot_cd;
+            virus_color = master_virus_color;
+
+            ReadHealth_VR(master_Health);
+            ReadShotCD_VR(master_shot_cd);
+            ReadColorVirus(master_virus_color);
+            Virus_Color_shots();
+        }
+
     }
 
     // Update is called once per frame
@@ -90,7 +124,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(nextTimeToFire);
         authorizedToShoot = true;
     }
 
@@ -143,5 +177,65 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_ShootParticule()
     {
         muzzleFlash.Play();
+    }
+
+    public void ReadHealth_VR(float health)
+    {
+        view.RPC("RPC_ReadHealth_VR", RpcTarget.OthersBuffered, health);
+    }
+
+    [PunRPC]
+    void RPC_ReadHealth_VR(float health)
+    {
+        currentHealth = health;
+        maxHealth = health;
+        //Debug.Log("masters"+currentHealth);
+    }
+
+    public void ReadShotCD_VR(float time_fire)
+    {
+        //Debug.Log("test cooldown");
+        view.RPC("RPC_ReadShotCD_VR", RpcTarget.OthersBuffered, time_fire);
+        return;
+    }
+    [PunRPC]
+    void RPC_ReadShotCD_VR(float time_fire)
+    {
+        nextTimeToFire = time_fire;
+        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
+    }
+    public void ReadColorVirus(float color)
+    {
+        //Debug.Log("test color : "+color);
+        view.RPC("RPC_ReadColorVirus", RpcTarget.OthersBuffered, color);
+    }
+    [PunRPC]
+    void RPC_ReadColorVirus(float color)
+    {
+        Virus_Color_shots();
+        virus_color = color;
+        //Debug.Log("masters colors RPC" + scientist_color);
+
+    }
+
+    public void Virus_Color_shots()
+    {
+        particle_effects_scientist = impactEffect.GetComponentsInChildren<ParticleSystem>();
+        beam_light_scientist = impactEffect.GetComponentInChildren<Light>();
+        var main0 = particle_effects_scientist[0].main;
+        var main1 = particle_effects_scientist[1].main;
+        var main2 = muzzleFlash.main;
+        main0.startColor = gamerules.GetColorScientist(virus_color);
+        main1.startColor = gamerules.GetColorScientist(virus_color);
+        main2.startColor = gamerules.GetColorScientist(virus_color);
+        beam_light_scientist.color = gamerules.GetColorScientist(virus_color);
+        Gradient grad = new Gradient();
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(gamerules.GetColorScientist(virus_color), 0.0f), new GradientColorKey(gamerules.GetColorScientist(virus_color), 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
+        var col1 = particle_effects_scientist[0].colorOverLifetime;
+        var col2 = particle_effects_scientist[1].colorOverLifetime;
+        var col3 = muzzleFlash.colorOverLifetime;
+        col1.color = grad;
+        col2.color = grad;
+        col3.color = grad;
     }
 }

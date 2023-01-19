@@ -6,7 +6,7 @@ public class Guns : MonoBehaviour
 {
     public GameObject impactEffect;
     public ThirdPersonInit thirdPersonScript;
-
+    public NetworkPlayerSpawn PlayerSpawn;
 
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Camera thirdCamera;
@@ -44,7 +44,7 @@ public class Guns : MonoBehaviour
     IEnumerator WaitReload()
     {
         //Debug.Log(thirdPersonScript.master_shot_cd);
-        Debug.Log("cooldown "+thirdPersonScript.nextTimeToFire);
+        //Debug.Log("cooldown "+ PlayerSpawn.nextTimeToFire);
         authorizedToShoot = false;
         yield return new WaitForSeconds(thirdPersonScript.nextTimeToFire);
         authorizedToShoot = true;

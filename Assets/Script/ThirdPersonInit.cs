@@ -31,14 +31,16 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public float master_shot_cd;
     public float master_scientist_color;
     public float scientist_color;
+    public bool master_is_third_person = false;
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
+ 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
-
+        
         if (PhotonNetwork.IsMasterClient)
         {
             //Debug.Log("enter master");
@@ -51,13 +53,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             maxHealth = master_Health;
             nextTimeToFire = master_shot_cd;
             scientist_color = master_scientist_color;
-            Debug.Log("test start");
+
             ReadHealth(master_Health);
             ReadShotCD(master_shot_cd);
             ReadColorScientist(master_scientist_color);
+            Scientist_Color_shots(master_scientist_color);
         }
 
-        Scientist_Color_shots(scientist_color);
 
 
         if (view.IsMine)
@@ -132,8 +134,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         muzzleFlash.Play();
     }
 
-
-
     public void ReadHealth(float health)
     {
         view.RPC("RPC_ReadHealth", RpcTarget.OthersBuffered, health);
@@ -143,12 +143,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     void RPC_ReadHealth(float health)
     {
         currentHealth = health;
+        maxHealth = health;
         //Debug.Log("masters"+currentHealth);
     }
 
     public void ReadShotCD(float time_fire)
     {
-        Debug.Log("test cooldown");
+        //Debug.Log("test cooldown");
         view.RPC("RPC_ReadShotCD", RpcTarget.OthersBuffered, time_fire);
         return;
     }
@@ -156,18 +157,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     void RPC_ReadShotCD(float time_fire)
     {
         nextTimeToFire = time_fire;
-        Debug.Log("masters cooldown RPC" + nextTimeToFire);
+        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
     }
     public void ReadColorScientist(float color)
     {
-        //Debug.Log("test color");
-        view.RPC("RPC_ReadColorsScientist", RpcTarget.OthersBuffered, color);
+        //Debug.Log("test color : "+color);
+        view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
+        Scientist_Color_shots(color);
         scientist_color = color;
-        //Debug.Log("masters cooldown RPC" + scientist_color);
+        //Debug.Log("masters colors RPC" + scientist_color);
+        
     }
 
     public void Scientist_Color_shots(float scientist)
@@ -176,13 +179,19 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         beam_light_scientist = impactEffect.GetComponentInChildren<Light>();
         var main0 = particle_effects_scientist[0].main;
         var main1 = particle_effects_scientist[1].main;
+        var main2 = muzzleFlash.main;
         main0.startColor = gamerules.GetColorScientist(scientist_color);
         main1.startColor = gamerules.GetColorScientist(scientist_color);
+        main2.startColor = gamerules.GetColorScientist(scientist_color);
         beam_light_scientist.color = gamerules.GetColorScientist(scientist_color);
         Gradient grad = new Gradient();
         grad.SetKeys(new GradientColorKey[] { new GradientColorKey(gamerules.GetColorScientist(scientist_color), 0.0f), new GradientColorKey(gamerules.GetColorScientist(scientist_color), 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
-        var col = particle_effects_scientist[0].colorOverLifetime;
-        col.color = grad;
+        var col1 = particle_effects_scientist[0].colorOverLifetime;
+        var col2 = particle_effects_scientist[1].colorOverLifetime;
+        var col3 = muzzleFlash.colorOverLifetime;
+        col1.color = grad;
+        col2.color = grad;
+        col3.color = grad;
     }
 
 }

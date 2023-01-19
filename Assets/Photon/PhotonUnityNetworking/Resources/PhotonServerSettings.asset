@@ -45,6 +45,10 @@ MonoBehaviour:
   - RPC_ReadColorScientist
   - RPC_ReadHealth
   - RPC_ReadShotCD
+  - RPC_ReadMasterThird
+  - RPC_ReadColorVirus
+  - RPC_ReadHealth_VR
+  - RPC_ReadShotCD_VR
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
