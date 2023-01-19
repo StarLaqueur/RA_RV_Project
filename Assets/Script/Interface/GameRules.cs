@@ -20,7 +20,7 @@ public class GameRules
         {
             case 1f: return Color.red;
             case 2f: return Color.yellow;
-            case 3f: return Color.black;
+            case 3f: return Color.cyan;
         }
 
         return Color.red;

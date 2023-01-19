@@ -1438,7 +1438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locomotionSys: {fileID: 6024181573640135854}
   body: {fileID: 5738019648671651047}
-  impactEffect: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
+  impactEffectScientist: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
+  impactEffectVirus: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
   cameraVR: {fileID: 6024181574489784575}
   xrControllerLeft: {fileID: 6024181572529163264}
   xrControllerRight: {fileID: 6024181572451438898}
@@ -1462,6 +1463,8 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   vrGunScript: {fileID: 8725818804285765001}
+  particle_effects_virus: []
+  beam_light_virus: {fileID: 0}
   particle_effects_scientist: []
   beam_light_scientist: {fileID: 0}
   currentHealth: 10
@@ -1472,7 +1475,10 @@ MonoBehaviour:
   master_shot_cd: 0
   master_virus_color: 0
   virus_color: 0
+  master_scientist_color: 0
+  scientist_color: 0
   master_is_third_person: 0
+  thirdPersonInit: {fileID: 0}
   muzzleFlash: {fileID: 32210795334820120}
   healthBarImage: {fileID: 3492760031900310821}
   ui: {fileID: 6205661769522338857}

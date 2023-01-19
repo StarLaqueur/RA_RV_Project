@@ -5266,13 +5266,16 @@ MonoBehaviour:
   aimCam: {fileID: 750156041639329861}
   affixGun: {fileID: 1378844786873009306}
   prefabThird: {fileID: 5593381128743669900}
-  impactEffect: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
+  impactEffectScientist: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
+  impactEffectVirus: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
   controller3RD: {fileID: 2153807175445112423}
   gunScript: {fileID: 3598831117685043087}
   playerController: {fileID: 2153807175445112408}
   muzzleFlash: {fileID: 8358595552373229350}
   healthBarImage: {fileID: 3103485749893880908}
   ui: {fileID: 5867652944435986095}
+  particle_effects_virus: []
+  beam_light_virus: {fileID: 0}
   particle_effects_scientist: []
   beam_light_scientist: {fileID: 0}
   currentHealth: 10
@@ -5283,6 +5286,10 @@ MonoBehaviour:
   master_shot_cd: 0
   master_scientist_color: 0
   scientist_color: 0
+  master_virus_color: 0
+  virus_color: 0
+  master_is_third_person: 0
+  playerVR: {fileID: 0}
 --- !u!1 &5609616420992835735
 GameObject:
   m_ObjectHideFlags: 0
@@ -6036,6 +6043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactEffect: {fileID: 902312218625666079}
   thirdPersonScript: {fileID: 822615282740409348}
+  PlayerSpawn: {fileID: 0}
   remotePlayerMask:
     serializedVersion: 2
     m_Bits: 3520
