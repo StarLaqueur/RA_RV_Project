@@ -14,7 +14,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     PhotonView view;
     NetworkPlayerSpawn networkPlayerSpawn;
 
-    public GameObject locomotionSys, body, impactEffectScientist, impactEffectVirus, gunVR;
+    public GameObject locomotionSys, body, impactEffectScientist, impactEffectVirus;
     public Camera cameraVR;
     public ActionBasedController xrControllerLeft, xrControllerRight;
     public TrackedPoseDriver tracketDriver;
@@ -65,7 +65,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         {
             respawnSound.Play();
             body.SetActive(false);
-            gunVR.SetActive(true);
             GetComponent<XROrigin>().enabled = true;
             GetComponentInChildren<CharacterControllerDriver>().enabled = true;
             playerVrCharacterController.enabled = true;

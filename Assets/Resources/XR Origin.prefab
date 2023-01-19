@@ -2010,7 +2010,6 @@ MonoBehaviour:
   body: {fileID: 5738019648671651047}
   impactEffectScientist: {fileID: 2005427282958113723, guid: 8e0a1e4c738fb0c4592a61f665300835, type: 3}
   impactEffectVirus: {fileID: 2005427282958113723, guid: 9199a70155d6a7843872f639c7bc77ab, type: 3}
-  gunVR: {fileID: 7201672721022311375}
   cameraVR: {fileID: 6024181574489784575}
   xrControllerLeft: {fileID: 6024181572529163264}
   xrControllerRight: {fileID: 6024181572451438898}
@@ -7908,7 +7907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101050, guid: 2c3055a11cb8f8540a181490a4c34b7c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 457962, guid: 2c3055a11cb8f8540a181490a4c34b7c, type: 3}
       propertyPath: m_RootOrder
