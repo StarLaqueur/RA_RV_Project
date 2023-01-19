@@ -3,7 +3,19 @@ guid: 1b1f519b61ab2b74b9d82bb9ebdd1b23
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Parent: {instanceID: 0}
+  - PinSpawn: {instanceID: 0}
+  - Panel: {instanceID: 0}
+  - npt: {instanceID: 0}
+  - respawnSound: {instanceID: 0}
+  - deathSound: {instanceID: 0}
+  - textMesh: {instanceID: 0}
+  - LoadStoredPin: {instanceID: 0}
+  - VRTeamText: {instanceID: 0}
+  - TPPTeamText: {instanceID: 0}
+  - thirdPersonScript: {fileID: 822615282740409348, guid: 00c38451a283c71409b9080a13b7dffe, type: 3}
+  - playerVRPrefab: {fileID: 2991447355110637643, guid: 36179caf9bdb5704984eeea9953e634f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

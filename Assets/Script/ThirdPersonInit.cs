@@ -19,8 +19,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public AudioSource respawnSound;
 
     private string thirdPersonMask = "ThirdPersonMask";
-    //public float currentHealth = 10;
-    //public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
 
@@ -43,8 +41,6 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public float scientist_color;
     public float master_virus_color;
     public float virus_color;
-    public float number_kills;
-    public float master_number_kills;
 
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
@@ -61,26 +57,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         
         if (PhotonNetwork.IsMasterClient)
         {
-            //Debug.Log("enter master rhird");
             json_gamerules = gamerules.gamerules_read();
             object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
             master_Health = object_gamerules.HP;
             master_shot_cd = object_gamerules.Shot_Cooldown;
             master_scientist_color = object_gamerules.Scientist_Color;
-            master_number_kills = object_gamerules.Shot_Cooldown;
-
             currentHealth = master_Health;
             maxHealth = master_Health;
             nextTimeToFire = master_shot_cd;
             scientist_color = master_scientist_color;
-            number_kills = master_number_kills;
-
             master_virus_color = object_gamerules.Virus_Color;
             virus_color = master_virus_color;
 
             ReadHealth(master_Health);
             ReadShotCD(master_shot_cd);
-
             ReadColorScientist(master_scientist_color);
             Scientist_Color_shots();
 
@@ -173,12 +163,10 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         currentHealth = health;
         maxHealth = health;
-        //Debug.Log("masters"+currentHealth);
     }
 
     public void ReadShotCD(float time_fire)
     {
-        //Debug.Log("test cooldown");
         view.RPC("RPC_ReadShotCD", RpcTarget.OthersBuffered, time_fire);
         return;
     }
@@ -186,11 +174,9 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     void RPC_ReadShotCD(float time_fire)
     {
         nextTimeToFire = time_fire;
-        //Debug.Log("masters cooldown RPC" + nextTimeToFire);
     }
     public void ReadColorScientist(float color)
     {
-        //Debug.Log("test color : "+color);
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
     [PunRPC]
@@ -198,21 +184,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     {
         scientist_color = color;
         Scientist_Color_shots();
-        //Debug.Log("masters colors RPC" + scientist_color);
     }
 
-    public void ReadNumberKills(float number_kills)
+    /*void ReadNumberKills(float kills)
     {
-        //Debug.Log("test color : "+color);
-        view.RPC("RPC_NumberKills", RpcTarget.OthersBuffered, number_kills);
+        view.RPC("RPC_ReadNumberKills", RpcTarget.AllBuffered, kills);
     }
     [PunRPC]
-    void RPC_ReadNumberKills(float color)
+    void RPC_ReadNumberKills(float kills_for_victory)
     {
-        scientist_color = color;
-        Scientist_Color_shots();
-        //Debug.Log("masters colors RPC" + scientist_color);
-    }
+        number_kills = kills_for_victory;
+    }*/
 
     public void Scientist_Color_shots()
     {

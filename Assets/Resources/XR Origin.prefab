@@ -2050,6 +2050,8 @@ MonoBehaviour:
   virus_color: 0
   master_scientist_color: 0
   scientist_color: 0
+  number_kills: 0
+  master_number_kills: 0
   master_is_third_person: 0
   thirdPersonInit: {fileID: 0}
   muzzleFlash: {fileID: 32210795334820120}

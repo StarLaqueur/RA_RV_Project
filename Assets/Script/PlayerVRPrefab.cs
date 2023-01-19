@@ -31,9 +31,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
-    //public float currentHealth = 10;
-    //public float maxHealth = 10;
-
 
     public ParticleSystem[] particle_effects_virus;
     public Light beam_light_virus;
@@ -111,22 +108,17 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             master_shot_cd = object_gamerules.Shot_Cooldown;
             master_virus_color = object_gamerules.Virus_Color;
             master_scientist_color = object_gamerules.Scientist_Color;
-            master_number_kills = object_gamerules.Shot_Cooldown;
 
             scientist_color = master_scientist_color;
             currentHealth = master_Health;
             maxHealth = master_Health;
             nextTimeToFire = master_shot_cd;
             virus_color = master_virus_color;
-            number_kills = master_number_kills;
 
             ReadHealth_VR(master_Health);
             ReadShotCD_VR(master_shot_cd);
-            ReadNumberKills(master_number_kills);
-
             ReadColorScientist(scientist_color);
             Scientist_Color_shots();
-
             ReadColorVirus(master_virus_color);
             Virus_Color_shots(master_virus_color);
         }
@@ -252,19 +244,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     }
     [PunRPC]
     void RPC_ReadColorScientist(float color)
-    {
-        scientist_color = color;
-        Scientist_Color_shots();
-        //Debug.Log("masters colors RPC" + scientist_color);
-    }
-
-    public void ReadNumberKills(float number_kills)
-    {
-        //Debug.Log("test color : "+color);
-        view.RPC("RPC_NumberKills", RpcTarget.OthersBuffered, number_kills);
-    }
-    [PunRPC]
-    void RPC_ReadNumberKills(float color)
     {
         scientist_color = color;
         Scientist_Color_shots();

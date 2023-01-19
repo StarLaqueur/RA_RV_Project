@@ -5632,7 +5632,6 @@ MonoBehaviour:
   scientist_color: 0
   master_virus_color: 0
   virus_color: 0
-  master_is_third_person: 0
   playerVR: {fileID: 0}
 --- !u!82 &2845219010829146889
 AudioSource:

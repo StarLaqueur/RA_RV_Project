@@ -31,16 +31,19 @@ public class GameManagement : MonoBehaviour
     public static GameManagement instance;
     public static int VRTeam = 0;
     public static int TPPTeam = 0;
+
     public TextMeshProUGUI VRTeamText;
     public TextMeshProUGUI TPPTeamText;
 
-    public ThirdPersonInit thirdPersonScript;
-    public PlayerVRPrefab playerVRPrefab;
+    public NetworkPlayerSpawn networkPlayer;
+
+
 
     private void Awake()
     {
         SetScoreText();
         instance = this;
+        Debug.Log(networkPlayer.number_kills);
     }
 
     void SetScoreText()
@@ -53,12 +56,12 @@ public class GameManagement : MonoBehaviour
     {
         SetScoreText();
 
-        if(VRTeam >= playerVRPrefab.number_kills & VRTeam >= thirdPersonScript.number_kills )
+        if(VRTeam >= networkPlayer.number_kills)
         {
             EndGame("VRTEAM");
         }
 
-        if(TPPTeam >= playerVRPrefab.number_kills & TPPTeam >= thirdPersonScript.number_kills)
+        if(TPPTeam >= networkPlayer.number_kills)
         {
             EndGame("KMSTEAM");
         }

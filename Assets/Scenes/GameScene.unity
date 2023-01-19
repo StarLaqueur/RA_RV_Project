@@ -812,6 +812,7 @@ GameObject:
   - component: {fileID: 1012633481}
   - component: {fileID: 1012633482}
   - component: {fileID: 1012633483}
+  - component: {fileID: 1012633484}
   m_Layer: 0
   m_Name: NetworkPlayerSpawn
   m_TagString: Untagged
@@ -848,6 +849,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5593381128743669900, guid: 00c38451a283c71409b9080a13b7dffe, type: 3}
   VRPrefab: {fileID: 6024181573307560874, guid: 36179caf9bdb5704984eeea9953e634f, type: 3}
+  json_gamerules: 
+  number_kills: 0
+  master_number_kills: 0
   game: {fileID: 1729558884}
 --- !u!114 &1012633483
 MonoBehaviour:
@@ -867,10 +871,27 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1012633484}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1012633484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012633480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1067756490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1272,7 @@ MonoBehaviour:
   LoadStoredPin: {fileID: 784680828}
   VRTeamText: {fileID: 1996515792}
   TPPTeamText: {fileID: 696300027}
+  networkPlayer: {fileID: 1012633482}
 --- !u!4 &1729558885
 Transform:
   m_ObjectHideFlags: 0
