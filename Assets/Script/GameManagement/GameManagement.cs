@@ -80,7 +80,6 @@ public class GameManagement : MonoBehaviour
 
     IEnumerator GameRespawn()
     {
-        Debug.Log("deth");
         deathSound.Play();
         textMesh.text = "Vous allez reapparaitre dans 5 secondes...";
         yield return new WaitForSeconds(1);

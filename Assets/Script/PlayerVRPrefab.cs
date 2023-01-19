@@ -25,6 +25,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     public CharacterController playerVrCharacterController;
     public InputActionProperty shootActionButton;
     public VRGuns vrGunScript;
+    public AudioSource shotSound;
+    public AudioSource isHit;
+    public AudioSource respawnSound;
     private bool authorizedToShoot = true;
 
     private string vrPlayerMask = "vrPlayerMask";
@@ -43,6 +46,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
         if (view.IsMine)
         {
+            respawnSound.Play();
             body.SetActive(false);
             GetComponent<XROrigin>().enabled = true;
             GetComponentInChildren<CharacterControllerDriver>().enabled = true;
@@ -108,6 +112,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             return;
         }
 
+        isHit.Play();
         currentHealth -= damage;
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
@@ -142,6 +147,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_ShootParticule()
     {
+        shotSound.Play();
         muzzleFlash.Play();
     }
 }
