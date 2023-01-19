@@ -119,6 +119,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     private void Die()
     {
+        PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
@@ -143,5 +144,16 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     void RPC_ShootParticule()
     {
         muzzleFlash.Play();
+    }
+
+    public void PlayerKilled()
+    {
+        view.RPC("RPC_PlayerKilled", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_PlayerKilled()
+    {
+        GameManagement.TPPTeam++;
     }
 }

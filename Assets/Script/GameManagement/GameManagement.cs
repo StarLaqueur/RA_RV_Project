@@ -7,6 +7,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManagement : MonoBehaviour
 {
@@ -23,6 +24,39 @@ public class GameManagement : MonoBehaviour
 
     public GameObject LoadStoredPin;
     private List<PinSpawn> ListPinSpawn;
+
+    public static GameManagement instance;
+    public static int VRTeam = 0;
+    public static int TPPTeam = 0;
+    public TextMeshProUGUI VRTeamText;
+    public TextMeshProUGUI TPPTeamText;
+
+    private void Awake()
+    {
+        SetScoreText();
+        instance = this;
+    }
+
+    void SetScoreText()
+    {
+        VRTeamText.text = VRTeam.ToString();
+        TPPTeamText.text = TPPTeam.ToString();
+    }
+
+    void Update()
+    {
+        SetScoreText();
+
+        if(VRTeam >= 2)
+        {
+            EndGame("VRTEAM");
+        }
+
+        if(TPPTeam >= 10)
+        {
+            EndGame("KMSTEAM");
+        }
+    }
 
     public void SetPinPoint()
     {
@@ -57,15 +91,11 @@ public class GameManagement : MonoBehaviour
         return position;
     }
 
-    public void EndGame(bool isWin)
+    public void EndGame(string winner)
     {
-        if (isWin)
-        {
-            SceneManager.LoadScene("WinGameScene");
-        } else
-        {
-            SceneManager.LoadScene("LooseGameScene");
-        }
+        SceneManager.LoadScene("EndGameScene");
+        PlayerPrefs.SetString("winner", winner);
+        PlayerPrefs.Save();
     }
 
     public void Respawn(GameObject player)
