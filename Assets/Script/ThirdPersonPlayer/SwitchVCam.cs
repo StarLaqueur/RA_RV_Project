@@ -3,18 +3,19 @@ using UnityEngine;
 public class SwitchVCam : MonoBehaviour
 {
     public int PriorityBoostAmount = 10;
-    //public GameObject Reticle;
 
     Cinemachine.CinemachineVirtualCameraBase vcam;
     [SerializeField] private Canvas thirdPersonCanvas;
     [SerializeField] private Canvas aimCanvas;
     bool boosted = false;
 
+    // Activation of the cinemachine camera
     void Start()
     {
         vcam = GetComponent<Cinemachine.CinemachineVirtualCameraBase>();
     }
 
+    // Camera management and setting up the zoom
     void Update()
     {
         if (vcam != null)
@@ -37,7 +38,5 @@ public class SwitchVCam : MonoBehaviour
                 aimCanvas.enabled = false;
             }
         }
-        /*if (Reticle != null)
-            Reticle.SetActive(boosted);*/
     }
 }

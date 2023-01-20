@@ -7,7 +7,8 @@ public class DropdownChoice : MonoBehaviour
     const string gameOption = "gameSetup";
     private TMP_Dropdown _dropdown;
 
-
+    // Set the drop-down menu at game startup based on its last choice
+    // And update of the global variable to find its choice
     void Awake()
     {
         _dropdown = GetComponent<TMP_Dropdown>();
@@ -19,6 +20,7 @@ public class DropdownChoice : MonoBehaviour
         }));
     }
 
+    // Updated drop-down menu
     void Start()
     {
         _dropdown.value = PlayerPrefs.GetInt(gameOption, 0);

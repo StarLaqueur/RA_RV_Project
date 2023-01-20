@@ -13,17 +13,18 @@ public class Guns : MonoBehaviour
     [SerializeField] int damage;
     private bool authorizedToShoot = true;
 
-    // Update is called once per frame
+    // Checking the shooting torch and if the player can shoot to invoke the Shoot function
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0) && authorizedToShoot)
         {
             Shoot();
             StartCoroutine(WaitReload());
         }
-
     }
+
+    // Activate particles
+    // Shooting with the raycast
     private void Shoot()
     {
         thirdPersonScript.ShootParticule();
@@ -34,6 +35,8 @@ public class Guns : MonoBehaviour
             thirdPersonScript.ShootThirdPerson(hit.point, hit.normal);
         }
     }
+
+    //Weapon reload coroutine
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;

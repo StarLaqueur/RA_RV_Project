@@ -16,6 +16,7 @@ public class FinalScene : MonoBehaviour
         textWinner.text = "WINNER " + PlayerPrefs.GetString("winner");
     }
 
+    // Method call when ending the game to show the countdown and exit the application
     IEnumerator GameEnd()
     {
         yield return new WaitForSeconds(1);
