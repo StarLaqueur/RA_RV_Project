@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: eu
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -39,6 +39,23 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - RPC_TakeDamage
+  - RPC_Shoot
+  - RPC_ShootParticule
+  - RPC_ReadColorScientist
+  - RPC_ReadHealth
+  - RPC_ReadShotCD
+  - RPC_ReadMasterThird
+  - RPC_ReadColorVirus
+  - RPC_ReadHealth_VR
+  - RPC_ReadShotCD_VR
+  - Scientist_Color_shots
+  - RPC_GetKill
+  - RPC_PlayerKilled
+  - RPC_ShootThird
+  - RPC_ShootVR
+  - RPC_TeleportationParticule
+  - RPC_Kills_For_Win
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1
