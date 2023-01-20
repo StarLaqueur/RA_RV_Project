@@ -11,10 +11,12 @@ public class PrintValueScientistColor : MonoBehaviour
     {
         TextValue = GetComponent<TextMeshProUGUI>();
     }
-
+    
+    //Updates the value of the text bow above the slider to the value of the slider
     public void textUpdate(float value)
     {
         string slider_value;
+        //Colors the font of the text depending of the selected color and prints a text with the color name instead of the value. The default is green.
         if (value==1)
         {
             slider_value = "Vert";

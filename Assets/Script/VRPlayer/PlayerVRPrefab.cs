@@ -32,21 +32,25 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     private string vrPlayerMask = "vrPlayerMask";
 
+    //Defines the needed particle systems for the coloration of the scientist's and virus's shots
     public ParticleSystem[] particle_effects_virus;
     public Light beam_light_virus;
     public ParticleSystem[] particle_effects_scientist;
     public Light beam_light_scientist;
-    public float currentHealth;
-    public float maxHealth;
-    public string json_gamerules;
-    public float master_Health;
+
+    //Defines the data needed to implement the host's choice of game parameters to the other players
+    private float currentHealth;
+    private float maxHealth;
+    private string json_gamerules;
+    private float master_Health;
     public float nextTimeToFire;
-    public float master_shot_cd;
-    public float master_virus_color;
-    public float virus_color;
-    public float master_scientist_color;
-    public float scientist_color;
-    public bool master_is_third_person = false;
+    private float master_shot_cd;
+    private float master_virus_color;
+    private float virus_color;
+    private float master_scientist_color;
+    private float scientist_color;
+
+    //Define the objects needed to read the JSON SaveData
     public JSON_Format object_gamerules;
     public GameRules gamerules = new GameRules();
 
@@ -93,10 +97,14 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             Destroy(ui);
         }
 
+        //If the player is the Master, reads the JSON data and instantiate RPC for every player to get these data
         if (PhotonNetwork.IsMasterClient)
         {
+            //References the JSON to read
             json_gamerules = gamerules.gamerules_read();
             object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
+
+            //Extract the data from the JSON and stores it in variables
             master_Health = object_gamerules.HP;
             master_shot_cd = object_gamerules.Shot_Cooldown;
             master_virus_color = object_gamerules.Virus_Color;
@@ -107,12 +115,11 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             nextTimeToFire = master_shot_cd;
             virus_color = master_virus_color;
 
+            //Call the functions to instantiate the RPC needed to give the correct values to every player
             ReadHealth_VR(master_Health);
             ReadShotCD_VR(master_shot_cd);
-
             ReadColorScientist(scientist_color);
             Scientist_Color_shots();
-
             ReadColorVirus(master_virus_color);
             Virus_Color_shots(master_virus_color);
         }
@@ -189,7 +196,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         muzzleFlash.Play();
     }
 
-
+    //Transfers the health value decided by the Master to every player
     public void ReadHealth_VR(float health)
     {
         view.RPC("RPC_ReadHealth_VR", RpcTarget.OthersBuffered, health);
@@ -201,7 +208,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         currentHealth = health;
         maxHealth = health;
     }
-
+    //Transfers the shot cooldown decided by the Master to every player
     public void ReadShotCD_VR(float time_fire)
     {
         view.RPC("RPC_ReadShotCD_VR", RpcTarget.OthersBuffered, time_fire);
@@ -213,10 +220,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         nextTimeToFire = time_fire;
     }
-
+    //Transfers the virus color decided by the Master to every player
     public void ReadColorVirus(float color)
     {
-        Debug.Log("test color_virus : "+color);
         view.RPC("RPC_ReadColorVirus", RpcTarget.OthersBuffered, color);
     }
 
@@ -226,10 +232,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     {
         Virus_Color_shots(color);
         virus_color = color;
-        Debug.Log("masters colors RPC" + virus_color);
 
     }
-
+    //Transfers the scientist color decided by the Master to every player
     public void ReadColorScientist(float color)
     {
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
@@ -242,10 +247,10 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         Scientist_Color_shots();
     }
 
+    //Change the color of the prefab corresponding to the particles of the virus's shots
     public void Virus_Color_shots(float color)
     {
         virus_color = color;
-        Debug.Log("je suis un test pour la coloration du virus pour le scientifique par le virus � la couleur "+virus_color);
         particle_effects_virus = impactEffectVirus.GetComponentsInChildren<ParticleSystem>();
         beam_light_virus = impactEffectVirus.GetComponentInChildren<Light>();
         var main0 = particle_effects_virus[0].main;
@@ -264,7 +269,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         col2.color = grad;
         col3.color = grad;
     }
-
+    //Change the color of the prefab corresponding to the particles of the virus's shots
     public void Scientist_Color_shots()
     {
         particle_effects_scientist = impactEffectScientist.GetComponentsInChildren<ParticleSystem>();
@@ -285,7 +290,6 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         col2.color = grad;
         col3.color = grad;
     }
-    
     public void PlayerKilled()
     {
         view.RPC("RPC_PlayerKilled", RpcTarget.All);

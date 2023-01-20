@@ -11,7 +11,8 @@ public class PrintValueVirusColor : MonoBehaviour
     {
         TextValue = GetComponent<TextMeshProUGUI>();
     }
-
+    
+    //Colors the font of the text depending of the selected color and prints a text with the color name instead of the value. The default is red.
     public void textUpdate(float value)
     {
         string slider_value;

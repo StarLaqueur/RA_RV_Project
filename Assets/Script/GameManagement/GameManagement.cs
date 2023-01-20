@@ -49,7 +49,6 @@ public class GameManagement : MonoBehaviour
     void Update()
     {
         SetScoreText();
-
         if(VRTeam >= 10)
         {
             EndGame("VRTEAM");

@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+//Defines utility functions for the treatment of the JSON SaveData
 public class GameRules
 {
-    /*public float HP = 10;
-    public float Explosion_Radius = 5;
-    public float TP_Cooldown = 3;
-    public float Kills_Victory = 10;
-    public float Shot_Cooldown = 1.5f;
-    public float Time_Capture = 30;
-    public float Virus_Color = 1;
-    public float Scientist_Color = 1;*/
-
+    //Associates the values of the Slider Color virus to colors. If the value is not a standard one, the color is red
     public Color GetColorVirus(float colorChoiceVirus)
     {
         switch (colorChoiceVirus)
@@ -25,7 +17,7 @@ public class GameRules
 
         return Color.red;
     }
-
+    //Associates the values of the Slider Color scientist to colors. If the value is not a standard one, the color is green
     public Color GetColorScientist(float colorChoiceScientist)
     {
         switch (colorChoiceScientist)
@@ -36,15 +28,14 @@ public class GameRules
         }
         return Color.green;
     }
+    //Utility function to reaf the JSON SaveData
     public string gamerules_read()
     {
         string path = Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
         using StreamReader reader = new StreamReader(path);
         string json = reader.ReadToEnd();
-        //Debug.Log(json);
         return (json);
     }
-
 }
 
 

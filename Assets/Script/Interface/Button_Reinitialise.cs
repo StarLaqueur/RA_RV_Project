@@ -7,61 +7,45 @@ using TMPro;
 
 public class Button_Reinitialise : MonoBehaviour
 {
-    public GameObject slider0;
-    public GameObject slider1;
-    public GameObject slider2;
-    public GameObject slider3;
-    public GameObject slider4;
-    public GameObject slider5;
-    public GameObject slider6;
-    public GameObject slider7;
+    private GameObject slider0;
+    private GameObject slider1;
+    private GameObject slider6;
+    private GameObject slider7;
 
     private string path = "";
-    private string persistentpath = "";
 
+    //Creates the JSON Object that will be used for storage
     JSON_Format JsonData = new JSON_Format();
 
     public void OnClickReinitialise ()
     {
-        //Number of HP
+        //Sets the Number of HP on the slider to 10
         slider0 = GameObject.Find("Barre vie");
         slider0.GetComponent<Slider>().value = 10;
-        //Shot Cooldown
+        //Sets the Shot Cooldown on the slider to 1.5
         slider1 = GameObject.Find("Slider (1)");
         slider1.GetComponent<Slider>().value = 1.5f;
-        //TP Cooldown
-        slider2 = GameObject.Find("Slider (2)");
-        slider2.GetComponent<Slider>().value=3;
-        //Kills For Victory
-        slider3 = GameObject.Find("Slider (3)");
-        slider3.GetComponent<Slider>().value = 10;
-        //Explosions radius
-        slider4 = GameObject.Find("Slider (4)");
-        slider4.GetComponent<Slider>().value = 5;
-        //Time to capture zone
-        slider5 = GameObject.Find("Slider (5)");
-        slider5.GetComponent<Slider>().value = 30;
-        //Virus shot color
+        //Sets the Virus Color on the slider to Red
         slider6 = GameObject.Find("Slider (6)");
         slider6.GetComponent<Slider>().value = 1;
-        //Scientist shot color
+        //Sets the Scientist Color on the slider to Green
         slider7 = GameObject.Find("Slider (7)");
         slider7.GetComponent<Slider>().value = 1;
 
+        //Defines the path to where the JSON is saved
         path = Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
-        persistentpath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
 
+
+        //Inputs the default data in the JSON string
         JsonData.HP = 10;
-        JsonData.Explosion_Radius = 5;
-        JsonData.Time_Capture = 30;
-        JsonData.TP_Cooldown = 3;
         JsonData.Shot_Cooldown = 1.5f;
-        JsonData.Kills_Victory = 10;
         JsonData.Scientist_Color = 1;
         JsonData.Virus_Color = 1;
 
+        //Creates the JSON string from the filled JSON object
         string json = JsonUtility.ToJson(JsonData);
 
+        //Writes the JSON string in a file located at the path
         using StreamWriter writer = new StreamWriter(path);
         writer.Write(json);
     }

@@ -10,7 +10,7 @@ public class PrintValueShotCD : MonoBehaviour
     {
         TextValue = GetComponent<TextMeshProUGUI>();
     }
-
+    //Updates the value of the text bow above the slider to the value of the slider
     public void textUpdate(float value)
     {
         string slider_value = value.ToString();

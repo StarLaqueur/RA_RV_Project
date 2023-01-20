@@ -55,6 +55,7 @@ MonoBehaviour:
   - RPC_ShootThird
   - RPC_ShootVR
   - RPC_TeleportationParticule
+  - RPC_Kills_For_Win
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
