@@ -2022,7 +2022,7 @@ MonoBehaviour:
   xrayInteractorRight: {fileID: 6024181572451438863}
   playerVrCharacterController: {fileID: 6024181573307560878}
   teleportationButton:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Teleportation Button
       m_Type: 0
@@ -2032,7 +2032,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 6558622148059887818, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   vrGunScript: {fileID: 8725818804285765001}
   shotSound: {fileID: 7231031874068409218}
   isHit: {fileID: 208128463976860266}
