@@ -6,26 +6,28 @@ using UnityEngine;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
-
     public TextMeshProUGUI textMesh;
 
-    // Start is called before the first frame update
+    // Startup function to use Photon configurations
     private void Start()
     {
         StartCoroutine(Loading());
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    // Connection of the loading menu to the lobby
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
     }
 
+    // Loading lobby scene
     public override void OnJoinedLobby()
     {
         SceneManager.LoadScene("LobbyScene");
     }
 
+    // Loading text animation
     private IEnumerator Loading()
     {
         while (true)

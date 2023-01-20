@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
     public GameObject playerPrefab;
     public GameObject VRPrefab;
 
@@ -16,17 +15,20 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
 
     GameObject controller;
 
+    // Player sight recovery
     void Awake()
     {
         PV = GetComponent<PhotonView>();
     }
 
+    // Player creation on startup
     void Start()
     {
         CreateController();
-
     }
 
+    // Method for the creation of the player according to his choice of the drop-down menu in the lobby
+    // Defining spawn points and instantiating the player with are good prefab
     public void CreateController()
     {
 		game.SetPinPoint();
@@ -40,6 +42,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         }
     }
 
+    // Death method that calls the respawn function
     public void Die()
     {
         game.Respawn(controller);

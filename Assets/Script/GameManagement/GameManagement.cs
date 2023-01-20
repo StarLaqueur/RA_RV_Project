@@ -11,11 +11,10 @@ using UnityEngine.UI;
 
 public class GameManagement : MonoBehaviour
 {
+    // Name of file load for spawnpoint
     private string fileName = "exportDataMap";
 
     public GameObject Parent;
-    //public GameObject PinContamination;
-    //public GameObject PinThrowable;
     public GameObject PinSpawn;
     public GameObject Panel;
     public NetworkPlayerSpawn npt;
@@ -34,18 +33,21 @@ public class GameManagement : MonoBehaviour
     public TextMeshProUGUI VRTeamText;
     public TextMeshProUGUI TPPTeamText;
 
+    // Displays score on startup
     private void Awake()
     {
         SetScoreText();
         instance = this;
     }
 
+    // Updates score based on global variables
     void SetScoreText()
     {
         VRTeamText.text = VRTeam.ToString();
         TPPTeamText.text = TPPTeam.ToString();
     }
 
+    // Updates the score and checks which team to win
     void Update()
     {
         SetScoreText();
@@ -60,6 +62,7 @@ public class GameManagement : MonoBehaviour
         }
     }
 
+    // Browse the JSON file and create spawn points on the map
     public void SetPinPoint()
     {
         string locationJson = File.ReadAllText(Application.streamingAssetsPath + "/" + fileName + ".json");
@@ -70,12 +73,6 @@ public class GameManagement : MonoBehaviour
         {
             switch (pin.PinType)
             {
-                //case "PinContamination":
-                //    LoadStoredPin = Instantiate(PinContamination, Parent.transform);
-                //    break;
-                //case "PinThrowable":
-                //    LoadStoredPin = Instantiate(PinThrowable, Parent.transform);
-                //    break;
                 case "PinSpawn":
                     LoadStoredPin = Instantiate(PinSpawn, Parent.transform);
                     ListPinSpawn.Add(new PinSpawn { PinPosition = StringToVector(pin.PinPosition.ToString()) });
@@ -85,6 +82,7 @@ public class GameManagement : MonoBehaviour
         }
     }
 
+    // Randomly calculate spawn point from list retrieve from JSON file
     public Vector3 SetSpawnPoint()
     {
         System.Random rand = new System.Random();
@@ -93,6 +91,7 @@ public class GameManagement : MonoBehaviour
         return position;
     }
 
+    // Display endgame scene and save winner in PlayerPrefs
     public void EndGame(string winner)
     {
         SceneManager.LoadScene("EndGameScene");
@@ -100,6 +99,7 @@ public class GameManagement : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // Respawn function, destroys the player and shows a waiting menu
     public void Respawn(GameObject player)
     {
         Panel.gameObject.SetActive(true);
@@ -107,6 +107,7 @@ public class GameManagement : MonoBehaviour
         StartCoroutine(GameRespawn());
     }
 
+    // Method of waiting for respawn then creating a new player at the end of the countdown
     IEnumerator GameRespawn()
     {
         deathSound.Play();
@@ -124,6 +125,7 @@ public class GameManagement : MonoBehaviour
         npt.CreateController();
     }
 
+    // Method to pass string coordinates to 3D Vector
     private Vector3 StringToVector(string sVector)
     {
         // Remove the parentheses
@@ -143,12 +145,14 @@ public class GameManagement : MonoBehaviour
     }
 }
 
+// Object class to save spawn points
 public class Pin
 {
     public string PinType;
     public string PinPosition;
 }
 
+// Object class to save positions in 3D vector
 public class PinSpawn
 {
     public Vector3 PinPosition;

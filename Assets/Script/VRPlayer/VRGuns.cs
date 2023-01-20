@@ -25,11 +25,13 @@ public class VRGuns : MonoBehaviour
 
     public void Shoot()
     {
+        //When the trigger is pressed, called ShootParticule function and send Haptic impulse in the controller of the player
         playerVRPrefab.ShootParticule();
         shooterXRController.SendHapticImpulse(0.5f, 0.25f);
         RaycastHit hit;
         if (Physics.Raycast(raycastOrigin.position, raycastOrigin.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, remotePlayerMask))
         {
+            //When the raycast hit a GameObject with the interface IDamageable, does damage to the GameObject
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
             playerVRPrefab.ShootVR(hit.point, hit.normal);
         }
@@ -37,6 +39,8 @@ public class VRGuns : MonoBehaviour
 
     IEnumerator WaitReload()
     {
+        //Define the time between each shots
+
         authorizedToShoot = false;
         yield return new WaitForSeconds(playerVRPrefab.nextTimeToFire);
         authorizedToShoot = true;

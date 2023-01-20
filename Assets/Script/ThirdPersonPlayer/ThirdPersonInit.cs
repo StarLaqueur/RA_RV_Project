@@ -13,22 +13,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
     public Guns gunScript;
     public PlayerController playerController;
     
-
     public AudioSource shotSound;
     public AudioSource isHitSound;
     public AudioSource respawnSound;
 
     private string thirdPersonMask = "ThirdPersonMask";
-    //public float currentHealth = 10;
-    //public float maxHealth = 10;
 
     NetworkPlayerSpawn networkPlayerSpawn;
-
 
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] Image healthBarImage;
     [SerializeField] GameObject ui;
 
+
+    
     //Defines the needed particle systems for the coloration of the scientist's and virus's shots
     public ParticleSystem[] particle_effects_virus;
     public Light beam_light_virus;
@@ -51,11 +49,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
 
     public PlayerVRPrefab playerVR;
 
-    private void Awake()
-    {
-        
-    }
-    // Start is called before the first frame update
+    // Initializing game settings and activating the player
     void Start()
     {
         view = GetComponent<PhotonView>();
@@ -67,6 +61,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             //References the JSON to read
             json_gamerules = gamerules.gamerules_read();
             object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
+            
             //Extract the data from the JSON and stores it in variables
             master_Health = object_gamerules.HP;
             master_shot_cd = object_gamerules.Shot_Cooldown;
@@ -77,15 +72,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
             scientist_color = master_scientist_color;
             master_virus_color = object_gamerules.Virus_Color;
             virus_color = master_virus_color;
+            
             //Call the functions to instantiate the RPC needed to give the correct values to every player
             ReadHealth(master_Health);
             ReadShotCD(master_shot_cd);
             ReadColorScientist(master_scientist_color);
             Scientist_Color_shots();
-
         }
-
-
 
         if (view.IsMine)
         {
@@ -108,12 +101,13 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
     }
 
+    // Define the RPC_TakeDamage fuction
     public void TakeDamageGo(float damage)
     {
         view.RPC("RPC_TakeDamage", RpcTarget.All, damage);
-
     }
 
+    // Update of the life bar and activation of death if the life is at zero
     [PunRPC]
     void RPC_TakeDamage(float damage)
     {
@@ -132,17 +126,20 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         }
     }
 
+    // Activation of death and point counter
     private void Die()
     {
         PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
+    // Define the RPC_ShootThird function
     public void ShootThirdPerson(Vector3 hitPosition, Vector3 hitNormal)
     {
         view.RPC("RPC_ShootThird", RpcTarget.All, hitPosition, hitNormal);
     }
 
+    // Create an object when fired and delete after 2 seconds
     [PunRPC]
     void RPC_ShootThird(Vector3 hitPosition, Vector3 hitNormal)
     {
@@ -150,29 +147,34 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         Destroy(impactGO, 2f);
     }
 
+    // Define the RPC_ShootParticule function
     public void ShootParticule()
     {
         view.RPC("RPC_ShootParticule", RpcTarget.All);
     }
 
+    // Activation of songs during a shot and particles
     [PunRPC]
     void RPC_ShootParticule()
     {
         shotSound.Play();
         muzzleFlash.Play();
     }
+
     //Transfers the health value decided by the Master to every player
     public void ReadHealth(float health)
     {
         view.RPC("RPC_ReadHealth", RpcTarget.OthersBuffered, health);
     }
 
+    // Life update
     [PunRPC]
     void RPC_ReadHealth(float health)
     {
         currentHealth = health;
         maxHealth = health;
     }
+    
     //Transfers the shot cooldown decided by the Master to every player
     public void ReadShotCD(float time_fire)
     {
@@ -180,23 +182,27 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         return;
     }
 
+    // Time between each shot
     [PunRPC]
     void RPC_ReadShotCD(float time_fire)
     {
         nextTimeToFire = time_fire;
     }
+
     //Transfers the scientist color decided by the Master to every player
     public void ReadColorScientist(float color)
     {
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
 
+    // Updated shooting colors
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
         scientist_color = color;
         Scientist_Color_shots();
     }
+
     //Change the color of the prefab corresponding to the particles of the virus's shots
     public void Scientist_Color_shots()
     {
@@ -218,6 +224,7 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         col2.color = grad;
         col3.color = grad;
     }
+
     //Change the color of the prefab corresponding to the particles of the virus's shots
     public void Virus_Color_shots(float color)
     {
@@ -240,16 +247,17 @@ public class ThirdPersonInit : MonoBehaviourPunCallbacks
         col2.color = grad;
         col3.color = grad;
     }
+    // Define the RPC_PlayerKilled function
 
     public void PlayerKilled()
     {
         view.RPC("RPC_PlayerKilled", RpcTarget.All);
     }
 
+    // Updated kill count for virus team
     [PunRPC]
     void RPC_PlayerKilled()
     {
         GameManagement.VRTeam++;
     }
-
 }
