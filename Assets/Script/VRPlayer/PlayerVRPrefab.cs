@@ -57,9 +57,11 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        // Get PhotonView and synchronization of the data's of the players.
         view = GetComponent<PhotonView>();
         networkPlayerSpawn = PhotonView.Find((int)view.InstantiationData[0]).GetComponent<NetworkPlayerSpawn>();
 
+        //  Enable VR character Controllers, body, ray, ... 
         if (view.IsMine)
         {
             respawnSound.Play();
@@ -89,12 +91,17 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
+            //Enable the display of the HealthBar for the player only.
             gameObject.layer = LayerMask.NameToLayer(vrPlayerMask);
             Destroy(ui);
         }
 
+        // Display game_rules to define for the master of the lobby.
+
         if (PhotonNetwork.IsMasterClient)
         {
+            //using json to define game_rules
+
             json_gamerules = gamerules.gamerules_read();
             object_gamerules = JsonUtility.FromJson<JSON_Format>(json_gamerules);
             master_Health = object_gamerules.HP;
@@ -107,6 +114,7 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
             nextTimeToFire = master_shot_cd;
             virus_color = master_virus_color;
 
+            //Add chosen rules to the game
             ReadHealth_VR(master_Health);
             ReadShotCD_VR(master_shot_cd);
 
@@ -119,10 +127,12 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     }
 
+    //Add teleportation synchronize particules
     void FixedUpdate()
     {
         if (teleportationButton.action.ReadValue<float>() > 0.1f)
         {
+            //Synchronize teleportation particules with RPC
             view.RPC("RPC_TeleportationParticule", RpcTarget.All);
 
         }
@@ -136,20 +146,25 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void TakeDamage(float damage)
     {
+        //Synchronize damage with RPC
         view.RPC("RPC_TakeDamage", RpcTarget.All, damage);
 
     }
 
     [PunRPC]
+    // Function of HealthSystem
     void RPC_TakeDamage(float damage)
     {
+        //If the view is not the player's one exit the function
         if (!view.IsMine)
         {
             return;
         }
-
+        //If it is play Hit sound and decrease the amount of HP
         isHit.Play();
         currentHealth -= damage;
+
+        //Update Health bar
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
@@ -160,18 +175,21 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     private void Die()
     {
+        //When player is at 0HP increment the scoreBoard and destroy the gameobject of the player
         PlayerKilled();
         networkPlayerSpawn.Die();
     }
 
     public void ShootVR(Vector3 hitPosition, Vector3 hitNormal)
     {
+        //Call RPC_ShootVR function with Remote Procedure calls
         view.RPC("RPC_ShootVR", RpcTarget.All, hitPosition, hitNormal);
     }
 
     [PunRPC]
     void RPC_ShootVR(Vector3 hitPosition, Vector3 hitNormal)
     {
+        //Add animation when hitting an object "Impact"
         GameObject impactGO = Instantiate(impactEffectVirus, hitPosition, Quaternion.LookRotation(hitNormal));
         
         Destroy(impactGO, 2f);
@@ -179,12 +197,14 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void ShootParticule()
     {
+        //Call RPC_ShootParticule function with Remote Procedure calls
         view.RPC("RPC_ShootParticule", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_ShootParticule()
     {
+        //Add shot sound and shot effect 
         shotSound.Play();
         muzzleFlash.Play();
     }
@@ -192,18 +212,21 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void ReadHealth_VR(float health)
     {
+        //Call RPC_ReadHealth_VR function with Remote Procedure calls
         view.RPC("RPC_ReadHealth_VR", RpcTarget.OthersBuffered, health);
     }
 
     [PunRPC]
     void RPC_ReadHealth_VR(float health)
     {
+        //get the MaximumHealth define by the master in the menu
         currentHealth = health;
         maxHealth = health;
     }
 
     public void ReadShotCD_VR(float time_fire)
     {
+        //Call RPC_ReadShotCD_VR function with Remote Procedure calls
         view.RPC("RPC_ReadShotCD_VR", RpcTarget.OthersBuffered, time_fire);
         return;
     }
@@ -211,12 +234,13 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_ReadShotCD_VR(float time_fire)
     {
+        //get the NextTimeToFire define by the master in the menu
         nextTimeToFire = time_fire;
     }
 
     public void ReadColorVirus(float color)
     {
-        Debug.Log("test color_virus : "+color);
+        //Call RPC_ReadColorVirus function with Remote Procedure calls
         view.RPC("RPC_ReadColorVirus", RpcTarget.OthersBuffered, color);
     }
 
@@ -224,28 +248,31 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     void RPC_ReadColorVirus(float color)
     {
+        //get the Virus_Color_shots define by the master in the menu
         Virus_Color_shots(color);
         virus_color = color;
-        Debug.Log("masters colors RPC" + virus_color);
 
     }
 
     public void ReadColorScientist(float color)
     {
+        //Call RPC_ReadColorScientist function with Remote Procedure calls
         view.RPC("RPC_ReadColorScientist", RpcTarget.OthersBuffered, color);
     }
 
     [PunRPC]
     void RPC_ReadColorScientist(float color)
     {
+        //get the scientist shots color define by the master in the menu
         scientist_color = color;
         Scientist_Color_shots();
     }
 
     public void Virus_Color_shots(float color)
     {
+        //Set the virus color shots, particle, muzzleFlash and impact
+
         virus_color = color;
-        Debug.Log("je suis un test pour la coloration du virus pour le scientifique par le virus � la couleur "+virus_color);
         particle_effects_virus = impactEffectVirus.GetComponentsInChildren<ParticleSystem>();
         beam_light_virus = impactEffectVirus.GetComponentInChildren<Light>();
         var main0 = particle_effects_virus[0].main;
@@ -267,6 +294,9 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
 
     public void Scientist_Color_shots()
     {
+
+        //Set the scientist color shots, particle, muzzleFlash and impact
+
         particle_effects_scientist = impactEffectScientist.GetComponentsInChildren<ParticleSystem>();
         beam_light_scientist = impactEffectScientist.GetComponentInChildren<Light>();
         var main0 = particle_effects_scientist[0].main;
@@ -288,12 +318,14 @@ public class PlayerVRPrefab : MonoBehaviourPunCallbacks, IDamageable
     
     public void PlayerKilled()
     {
+        //get the RPC_PlayerKilled define by the master in the menu
         view.RPC("RPC_PlayerKilled", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_PlayerKilled()
     {
+        //Add point to the scoreBoard for the VR Team
         GameManagement.TPPTeam++;
 
     }
