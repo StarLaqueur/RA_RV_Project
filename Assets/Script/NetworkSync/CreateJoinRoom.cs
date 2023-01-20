@@ -18,12 +18,10 @@ public class CreateJoinRoom : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom(joinInput.text);
-        Debug.Log("testjoin");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("test_joined");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }

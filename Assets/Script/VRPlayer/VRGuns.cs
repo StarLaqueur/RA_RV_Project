@@ -10,17 +10,19 @@ public class VRGuns : MonoBehaviour
     [SerializeField] XRBaseController shooterXRController;
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Transform raycastOrigin;
-    public GameObject impactEffect;
-    public ParticleSystem muzzleflash;
     public PlayerVRPrefab playerVRPrefab;
+    private bool authorizedToShoot = true;
+    public InputActionProperty shootActionButton;
 
-    // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        
+        if (shootActionButton.action.ReadValue<float>() > 0.1f && authorizedToShoot)
+        {
+            Shoot();
+            StartCoroutine(WaitReload());
+        }
     }
 
-    // Update is called once per frame
     public void Shoot()
     {
         playerVRPrefab.ShootParticule();
@@ -31,5 +33,12 @@ public class VRGuns : MonoBehaviour
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
             playerVRPrefab.ShootVR(hit.point, hit.normal);
         }
+    }
+
+    IEnumerator WaitReload()
+    {
+        authorizedToShoot = false;
+        yield return new WaitForSeconds(playerVRPrefab.nextTimeToFire);
+        authorizedToShoot = true;
     }
 }

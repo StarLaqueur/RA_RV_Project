@@ -52,6 +52,9 @@ MonoBehaviour:
   - Scientist_Color_shots
   - RPC_GetKill
   - RPC_PlayerKilled
+  - RPC_ShootThird
+  - RPC_ShootVR
+  - RPC_TeleportationParticule
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
