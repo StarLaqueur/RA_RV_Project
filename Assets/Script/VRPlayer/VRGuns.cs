@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -10,6 +11,7 @@ public class VRGuns : MonoBehaviour
     [SerializeField] XRBaseController shooterXRController;
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Transform raycastOrigin;
+    [SerializeField] Image reloadBar;
     public PlayerVRPrefab playerVRPrefab;
     private bool authorizedToShoot = true;
     public InputActionProperty shootActionButton;
@@ -42,7 +44,10 @@ public class VRGuns : MonoBehaviour
         //Define the time between each shots
 
         authorizedToShoot = false;
+        reloadBar.fillAmount = 0;
         yield return new WaitForSeconds(playerVRPrefab.nextTimeToFire);
+        reloadBar.fillAmount = 1;
         authorizedToShoot = true;
+        
     }
 }

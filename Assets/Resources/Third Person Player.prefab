@@ -7321,6 +7321,7 @@ MonoBehaviour:
     m_Bits: 2496
   thirdCamera: {fileID: 5634966316536609407}
   damage: 1
+  reloadBar: {fileID: 731319804849236778}
 --- !u!114 &6718641735376302555
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1971,6 +1971,7 @@ MonoBehaviour:
   - {fileID: 7734861604847911125}
   - {fileID: 7848868972063216038}
   - {fileID: 176070034168039484}
+  - {fileID: 3448283429257657572}
   - {fileID: 4105411192693881713}
   - {fileID: 8689391322646017135}
   - {fileID: 1260234847804440037}
@@ -12957,6 +12958,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1472
   raycastOrigin: {fileID: 7339190723247893644}
+  reloadBar: {fileID: 9211240581121390404}
   playerVRPrefab: {fileID: 2991447355110637643}
   shootActionButton:
     m_UseReference: 1

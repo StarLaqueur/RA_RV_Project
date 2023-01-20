@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Guns : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Guns : MonoBehaviour
     [SerializeField] private LayerMask remotePlayerMask;
     [SerializeField] Camera thirdCamera;
     [SerializeField] int damage;
+    [SerializeField] Image reloadBar;
     private bool authorizedToShoot = true;
 
     // Checking the shooting torch and if the player can shoot to invoke the Shoot function
@@ -37,7 +39,10 @@ public class Guns : MonoBehaviour
     IEnumerator WaitReload()
     {
         authorizedToShoot = false;
+        reloadBar.fillAmount = 0;
         yield return new WaitForSeconds(thirdPersonScript.nextTimeToFire);
+        reloadBar.fillAmount = 1;
         authorizedToShoot = true;
+        
     }
 }
