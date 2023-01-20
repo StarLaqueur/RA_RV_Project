@@ -10,25 +10,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private Transform cam;
     private Animator anim;
 
-
     private float rotationSpeed = 14f;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
     private bool isGrounded;
-    public GameObject impactEffect;
     public ThirdPersonInit thirdPersonScript;
 
     private Vector3 playerVelocity;
     private float playerSpeed = 5f;
-    
     private float gravityValue = -9.81f;
-
-
     public float groundDistance = 0.2f;
     public LayerMask groundMask;
-
-    [SerializeField] private LayerMask remotePlayerMask;
-
 
     private void Start()
     {
