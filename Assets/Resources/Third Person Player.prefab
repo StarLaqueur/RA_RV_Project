@@ -5619,17 +5619,7 @@ MonoBehaviour:
   beam_light_virus: {fileID: 0}
   particle_effects_scientist: []
   beam_light_scientist: {fileID: 0}
-  currentHealth: 10
-  maxHealth: 10
-  json_gamerules: 
-  master_Health: 0
   nextTimeToFire: 0
-  master_shot_cd: 0
-  master_scientist_color: 0
-  scientist_color: 0
-  master_virus_color: 0
-  virus_color: 0
-  master_is_third_person: 0
   playerVR: {fileID: 0}
 --- !u!82 &2845219010829146889
 AudioSource:
